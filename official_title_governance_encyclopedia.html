@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>世界の国家形態・政治体制・公式国号 完全図鑑 (世界196か国・地域完全網羅)</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: {
+                            50: '#f0f4f8',
+                            100: '#d9e2ec',
+                            700: '#1e3a8a',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                            950: '#060a12'
+                        },
+                        amber: {
+                            400: '#fbbf24',
+                            500: '#d97706',
+                            600: '#b45309'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Hiragino Sans"', '"Hiragino Kaku Gothic ProN"', '"Noto Sans JP"', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col selection:bg-amber-500 selection:text-white">
+
+    <!-- Header Section -->
+    <header class="bg-navy-950 text-white shadow-lg border-b border-navy-800 sticky top-0 z-30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5">
+            <div class="flex items-center justify-between gap-4">
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="resetApp()">
+                    <div class="bg-amber-500 p-2 rounded-xl text-navy-950 font-bold shadow-md flex items-center justify-center">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 002 2h1.5a2.5 2.5 0 002.5-2.5V7.865M12 21a9 9 0 100-18 9 9 0 000 18z"/></svg>
+                    </div>
+                    <div>
+                        <h1 class="text-base sm:text-xl font-bold tracking-wide flex items-center gap-2">
+                            世界の国家形態・政治体制・公式国号 完全図鑑
+                        </h1>
+                        <p class="text-xs text-slate-400 font-light hidden sm:block">外務省公認公的正式国号・漢字表記・国連加盟日 完全網羅データベース (全196か国・地域)</p>
+                    </div>
+                </div>
+
+                <!-- Header Actions -->
+                <div class="flex items-center space-x-2">
+                    <button id="bookmark-filter-btn" onclick="toggleBookmarkFilter()" class="px-3 py-1.5 rounded-xl text-xs font-medium bg-navy-900 hover:bg-navy-800 text-slate-200 border border-navy-700 transition flex items-center gap-1.5">
+                        <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z"/></svg>
+                        <span class="hidden sm:inline">ブックマーク</span> (<span id="bookmark-count">0</span>)
+                    </button>
+                    <button onclick="openCompareModal()" class="px-3 py-1.5 rounded-xl text-xs font-medium bg-amber-500 hover:bg-amber-600 text-navy-950 font-bold shadow transition flex items-center gap-1.5">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+                        <span>国号・制度比較</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Search Box and View Mode Selector -->
+    <section class="bg-white border-b border-slate-200 py-3.5 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-3">
+            <!-- Search Bar -->
+            <div class="relative max-w-3xl mx-auto">
+                <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                </div>
+                <input type="text" id="search-input" oninput="handleSearch()" placeholder="日本の正式名称（例: スリランカ民主社会主義共和国）、通称、漢字（例: 印度尼西亜）、加盟日で検索..." class="w-full pl-10 pr-10 py-2.5 text-sm border border-slate-300 rounded-xl focus:ring-2 focus:ring-navy-700 focus:border-navy-700 outline-none transition shadow-sm">
+                <button id="clear-search" onclick="clearSearch()" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+
+            <!-- View Mode Switcher -->
+            <div class="flex items-center justify-center border-t border-slate-100 pt-2.5">
+                <div class="bg-slate-100 p-1 rounded-xl flex space-x-1 text-xs font-bold border border-slate-200 overflow-x-auto max-w-full">
+                    <button id="mode-btn-suffix" onclick="switchViewMode('suffix')" class="px-3 sm:px-4 py-1.5 rounded-lg transition bg-navy-900 text-white shadow whitespace-nowrap">
+                        【1】国号構造（語尾）別タブ
+                    </button>
+                    <button id="mode-btn-region" onclick="switchViewMode('region')" class="px-3 sm:px-4 py-1.5 rounded-lg transition text-slate-600 hover:text-navy-900 whitespace-nowrap">
+                        【2】地域別タブ
+                    </button>
+                    <button id="mode-btn-structure" onclick="switchViewMode('structure')" class="px-3 sm:px-4 py-1.5 rounded-lg transition text-slate-600 hover:text-navy-900 whitespace-nowrap">
+                        【3】国家・統治構造別タブ
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sub-Nav Tabs Container -->
+    <nav class="bg-navy-900 text-slate-200 sticky top-[57px] sm:top-[65px] z-20 shadow-md border-t border-navy-800">
+        <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+            <div id="tab-container" class="flex overflow-x-auto no-scrollbar space-x-1 py-2 text-xs font-medium">
+                <!-- Dynamically rendered sub-tabs with badge count -->
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-grow w-full">
+        <!-- Status Bar -->
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 pb-3 border-b border-slate-200 gap-2">
+            <div>
+                <h2 id="current-tab-title" class="text-lg sm:text-2xl font-bold text-navy-900 flex items-center gap-2">
+                    すべての国・地域
+                </h2>
+                <p id="results-count-text" class="text-xs text-slate-500 mt-0.5">全 196 件を表示中</p>
+            </div>
+            
+            <div class="flex items-center space-x-3 text-xs w-full sm:w-auto justify-end">
+                <label for="sort-select" class="text-slate-500 whitespace-nowrap font-medium">並び順:</label>
+                <select id="sort-select" onchange="handleSortChange(this.value)" class="bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-slate-700 focus:outline-none focus:ring-1 focus:ring-navy-700 font-medium">
+                    <option value="official">正式国号順（五十音）</option>
+                    <option value="common">通称順（五十音）</option>
+                    <option value="un">国連加盟日順</option>
+                    <option value="region">地域順</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Country Grid -->
+        <div id="countries-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <!-- Populated via JS -->
+        </div>
+
+        <!-- Empty Results -->
+        <div id="empty-state" class="hidden text-center py-16 bg-white rounded-2xl border border-dashed border-slate-300">
+            <svg class="w-12 h-12 text-slate-300 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <h3 class="text-base font-semibold text-slate-700">該当する国・地域が見つかりません</h3>
+            <p class="text-xs text-slate-500 mt-1">検索キーワードや表示タブを変更してみてください。</p>
+            <button onclick="resetApp()" class="mt-4 px-4 py-2 text-xs font-semibold bg-navy-900 text-white rounded-lg hover:bg-navy-800 transition">条件をすべてクリア</button>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-navy-950 text-slate-400 py-8 text-xs border-t border-navy-800 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-2">
+            <p class="text-slate-300 font-medium">世界の国家形態・政治体制・公式国号 完全図鑑</p>
+            <p class="max-w-3xl mx-auto text-slate-500 leading-relaxed text-[11px]">
+                日本国外務省公認の公式日本語正式名称、漢字表記、国連加盟年月日、国際的地位に基づいて構築された完全196か国・地域対応の百科事典アプリケーションです。
+            </p>
+            <p class="text-slate-600">© 2026 World Official Titles & Governance Database (All 196 Entries Complete)</p>
+        </div>
+    </footer>
+
+    <!-- Detail Modal -->
+    <div id="detail-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-3 sm:p-6 hidden overflow-y-auto">
+        <div class="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden my-auto">
+            <!-- Modal Header -->
+            <div class="bg-navy-950 text-white px-6 py-4 flex items-center justify-between border-b border-navy-800 sticky top-0 z-10">
+                <div class="flex items-center space-x-3">
+                    <span id="modal-flag" class="text-3xl sm:text-4xl"></span>
+                    <div>
+                        <h2 id="modal-official-title" class="text-lg sm:text-xl font-bold tracking-tight text-amber-400"></h2>
+                        <div class="flex items-center gap-2 mt-0.5">
+                            <span id="modal-common-name" class="text-xs text-slate-200 font-medium"></span>
+                            <span id="modal-kanji-name" class="text-xs text-amber-300 font-serif"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <button id="modal-bookmark-btn" onclick="toggleCurrentModalBookmark()" class="p-2 rounded-lg bg-navy-900 hover:bg-navy-800 text-slate-300 transition" title="保存">
+                        <svg id="modal-bookmark-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
+                    </button>
+                    <button onclick="closeDetailModal()" class="p-2 rounded-lg bg-navy-900 hover:bg-navy-800 text-slate-300 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Modal Body -->
+            <div id="modal-body" class="p-6 overflow-y-auto space-y-5 text-sm text-slate-700">
+                <!-- JS dynamic insert -->
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="bg-slate-50 border-t border-slate-200 px-6 py-3 flex justify-between items-center text-xs text-slate-500">
+                <span>外務省公認国名・国際法学術データ</span>
+                <button onclick="copyCountryData()" class="px-3 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-lg font-medium transition flex items-center gap-1">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                    <span>解説テキストをコピー</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Compare Modal -->
+    <div id="compare-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-3 sm:p-6 hidden overflow-y-auto">
+        <div class="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden my-auto">
+            <div class="bg-navy-950 text-white px-6 py-4 flex items-center justify-between">
+                <div>
+                    <h2 class="text-lg font-bold flex items-center gap-2">
+                        <svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+                        2国間 正式国号・政治制度 対比比較ツール
+                    </h2>
+                    <p class="text-xs text-slate-400 mt-0.5">日本の公式正式名称・漢字・加盟日・政治体制を並べて対比します</p>
+                </div>
+                <button onclick="closeCompareModal()" class="p-2 rounded-lg bg-navy-900 hover:bg-navy-800 text-slate-300 transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+
+            <div class="p-6 overflow-y-auto space-y-6">
+                <!-- Selectors -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-slate-100 p-4 rounded-xl border border-slate-200">
+                    <div>
+                        <label class="block text-xs font-bold text-navy-900 mb-1">比較する国 A</label>
+                        <select id="compare-select-1" onchange="renderComparison()" class="w-full bg-white border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-navy-700">
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-navy-900 mb-1">比較する国 B</label>
+                        <select id="compare-select-2" onchange="renderComparison()" class="w-full bg-white border border-slate-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-navy-700">
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Compare Matrix -->
+                <div id="comparison-results" class="space-y-4">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-5 right-5 bg-navy-950 text-white px-4 py-2.5 rounded-xl shadow-xl text-xs font-medium flex items-center space-x-2 transition-all duration-300 opacity-0 transform translate-y-4 pointer-events-none z-50 border border-navy-800">
+        <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+        <span id="toast-message">メッセージ</span>
+    </div>
+
+    <!-- Application Script & Raw Dataset -->
+    <script>
+        // --- 1. MODE TABS DEFINITIONS ---
+        
+        // Mode 1: Suffix Categories based exclusively on Japanese Official Formal Title Endings
+        const SUFFIX_TABS = [
+            { id: 'all', label: 'すべて' },
+            { id: 'koku_pure', label: '〜国' },
+            { id: 'dokuritsukoku', label: '〜独立国' },
+            { id: 'goushuukoku', label: '〜合衆国' },
+            { id: 'rengou', label: '〜連合' },
+            { id: 'renpou', label: '〜連邦' },
+            { id: 'renpou_kyouwakoku', label: '〜連邦共和国' },
+            { id: 'renpou_minshu_kyouwakoku', label: '〜連邦民主共和国' },
+            // 「公国」系（2階層目の親タブ）
+            {
+                id: 'kougoku_group',
+                label: '公国（〜公国系）',
+                hasSubTabs: true,
+                subTabs: [
+                    { id: 'kougoku_all', label: 'すべての公国 (大公国含む)' },
+                    { id: 'kougoku_pure', label: '〜公国' },
+                    { id: 'taikougoku', label: '〜大公国' }
+                ]
+            },
+            // 「王国」系（2階層目の親タブ）
+            {
+                id: 'ougoku_group',
+                label: '王国（〜王国系）',
+                hasSubTabs: true,
+                subTabs: [
+                    { id: 'ougoku_all', label: 'すべての王国 (連合王国含む)' },
+                    { id: 'ougoku_pure', label: '〜王国' },
+                    { id: 'rengou_ougoku', label: '〜連合王国' }
+                ]
+            },
+            // 「共和国」系（2階層目の親タブ）
+            { 
+                id: 'kyouwakoku_group', 
+                label: '共和国（〜共和国系）',
+                hasSubTabs: true,
+                subTabs: [
+                    { id: 'kyouwakoku_all', label: 'すべての共和国 (連邦系除く)' },
+                    { id: 'kyouwakoku_pure', label: '〜共和国 (純粋)' },
+                    { id: 'islam_kyouwakoku', label: '〜イスラム共和国' },
+                    { id: 'bolivar_kyouwakoku', label: '〜ボリバル共和国' },
+                    { id: 'touhou_kyouwakoku', label: '〜東方共和国' },
+                    { id: 'kyoudou_kyouwakoku', label: '〜協同共和国' },
+                    { id: 'jinmin_kyouwakoku', label: '〜人民共和国' },
+                    { id: 'minshu_kyouwakoku', label: '〜民主共和国' },
+                    { id: 'shakaishugi_kyouwakoku', label: '〜社会主義共和国' }
+                ]
+            },
+            { id: 'taminzoku_koku', label: '〜多民族国' },
+            { id: 'shikoku', label: '〜市国' },
+            { id: 'none', label: '名前に後置詞なし（国名のみ）' }
+        ];
+
+        // Mode 2: Region Tabs
+        const REGION_TABS = [
+            { id: 'all', label: '全地域' },
+            { id: 'アジア', label: 'アジア' },
+            { id: '中東', label: '中東' },
+            { id: 'ヨーロッパ', label: 'ヨーロッパ' },
+            { id: 'アフリカ', label: 'アフリカ' },
+            { id: '北アメリカ', label: '北アメリカ' },
+            { id: '南アメリカ', label: '南アメリカ' },
+            { id: 'オセアニア', label: 'オセアニア' }
+        ];
+
+        // Mode 3: State Structure Tabs
+        const STRUCTURE_TABS = [
+            { id: 'all', label: '全制度' },
+            { id: '単一国家', label: '単一国家' },
+            { id: '連邦制', label: '連邦制国家' },
+            { id: '共和制', label: '共和制' },
+            { id: '君主制', label: '君主制' },
+            { id: '大統領制', label: '大統領制' },
+            { id: '議院内閣制', label: '議院内閣制' },
+            { id: '半大統領制', label: '半大統領制' },
+            { id: '一党制', label: '一党制・その他' }
+        ];
+
+        // --- 2. COMPLETE DATASET (USER-PROVIDED 196 ENTRIES) ---
+        const RAW_USER_DATA = [
+            ["インド", "印度", "インド", "アジア", "1945/10/30", "", "連邦制", "議院内閣制", "🇮🇳"],
+            ["インドネシア", "印度尼西亜", "インドネシア共和国", "アジア", "1950/9/28", "", "単一国家", "大統領制", "🇮🇩"],
+            ["カンボジア", "柬埔寨", "カンボジア王国", "アジア", "1955/12/14", "", "単一国家", "議院内閣制", "🇰🇭"],
+            ["シンガポール", "星嘉坡", "シンガポール共和国", "アジア", "1965/9/21", "", "単一国家", "議院内閣制", "🇸🇬"],
+            ["スリランカ", "錫蘭", "スリランカ民主社会主義共和国", "アジア", "1955/12/14", "", "単一国家", "半大統領制", "🇱🇰"],
+            ["タイ", "泰", "タイ王国", "アジア", "1946/12/16", "", "単一国家", "議院内閣制", "🇹🇭"],
+            ["ネパール", "尼泊爾", "ネパール", "アジア", "1955/12/14", "", "連邦制", "議院内閣制", "🇳🇵"],
+            ["パキスタン", "巴基斯坦", "パキスタン・イスラム共和国", "アジア", "1947/9/30", "", "連邦制", "議院内閣制", "🇵🇰"],
+            ["バングラデシュ", "孟加拉", "バングラデシュ人民共和国", "アジア", "1974/9/17", "", "単一国家", "議院内閣制", "🇧🇩"],
+            ["フィリピン", "比律賓", "フィリピン共和国", "アジア", "1945/10/24", "", "単一国家", "大統領制", "🇵🇭"],
+            ["ブータン", "不丹", "ブータン王国", "アジア", "1971/9/21", "", "単一国家", "議院内閣制", "🇧🇹"],
+            ["ブルネイ", "文莱", "ブルネイ・ダルサラーム国", "アジア", "1984/9/21", "", "単一国家", "絶対君主制", "🇧🇳"],
+            ["ベトナム", "越南", "ベトナム社会主義共和国", "アジア", "1977/9/20", "", "単一国家", "一党執政", "🇻🇳"],
+            ["マレーシア", "馬来西亜", "マレーシア", "アジア", "1957/9/17", "", "連邦制", "議院内閣制", "🇲🇾"],
+            ["ミャンマー", "緬甸", "ミャンマー連邦共和国", "アジア", "1948/4/19", "", "連邦制", "軍政/大統領制", "🇲🇲"],
+            ["モルディブ", "馬爾代夫", "モルディブ共和国", "アジア", "1965/9/21", "", "単一国家", "大統領制", "🇲🇻"],
+            ["モンゴル", "蒙古", "モンゴル国", "アジア", "1961/10/27", "", "単一国家", "半大統領制", "🇲🇳"],
+            ["ラオス", "老?", "ラオス人民民主共和国", "アジア", "1955/12/14", "", "単一国家", "一党執政", "🇱🇦"],
+            ["韓国", "韓国", "大韓民国", "アジア", "1991/9/17", "", "単一国家", "大統領制", "🇰🇷"],
+            ["中国", "中国", "中華人民共和国", "アジア", "1945/10/24", "国連常任理事国", "単一国家", "一党執政", "🇨🇳"],
+            ["東ティモール", "東帝?", "東ティモール民主共和国", "アジア", "2002/9/27", "", "単一国家", "半大統領制", "🇹🇱"],
+            ["日本", "日本", "日本国", "アジア", "1956/12/18", "", "単一国家", "議院内閣制", "🇯🇵"],
+            ["北朝鮮", "北朝鮮", "朝鮮民主主義人民共和国(北朝鮮)", "アジア", "1991/9/17", "", "単一国家", "一党執政", "🇰🇵"],
+            ["アルジェリア", "阿爾及", "アルジェリア民主人民共和国", "アフリカ", "1962/10/8", "", "単一国家", "半大統領制", "🇩🇿"],
+            ["アンゴラ", "安哥拉", "アンゴラ共和国", "アフリカ", "1976/12/1", "", "単一国家", "大統領制", "🇦🇴"],
+            ["ウガンダ", "烏干達", "ウガンダ共和国", "アフリカ", "1962/10/25", "", "単一国家", "大統領制", "🇺🇬"],
+            ["エジプト", "埃及", "エジプト・アラブ共和国", "中東", "1945/10/24", "", "単一国家", "半大統領制", "🇪🇬"],
+            ["エチオピア", "埃塞俄比亜", "エチオピア連邦民主共和国", "アフリカ", "1945/11/13", "", "連邦制", "議院内閣制", "🇪🇹"],
+            ["エリトリア", "厄立特里亜", "エリトリア国", "アフリカ", "1993/5/28", "", "単一国家", "一党執政", "🇪🇷"],
+            ["ガーナ", "加納", "ガーナ共和国", "アフリカ", "1957/3/8", "", "単一国家", "大統領制", "🇬🇭"],
+            ["カーボベルデ", "佛得角", "カーボベルデ共和国", "アフリカ", "1975/9/16", "", "単一国家", "半大統領制", "🇨🇻"],
+            ["ガボン", "加蓬", "ガボン共和国", "アフリカ", "1960/9/20", "", "単一国家", "大統領制", "🇬🇦"],
+            ["カメルーン", "喀麦隆", "カメルーン共和国", "アフリカ", "1960/9/20", "", "単一国家", "大統領制", "🇨🇲"],
+            ["ガンビア", "岡比亜", "ガンビア共和国", "アフリカ", "1965/9/21", "", "単一国家", "大統領制", "🇬🇲"],
+            ["ギニア", "幾内亜", "ギニア共和国", "アフリカ", "1958/12/12", "", "単一国家", "大統領制", "🇬🇳"],
+            ["ギニアビサウ", "幾内亜比紹", "ギニア・ビサオ共和国", "アフリカ", "1974/9/17", "", "単一国家", "半大統領制", "🇬🇼"],
+            ["ケニア", "肯尼亜", "ケニア共和国", "アフリカ", "1963/12/16", "", "単一国家", "大統領制", "🇰🇪"],
+            ["コートジボワール", "象牙海岸", "コートジボワール共和国（象牙海岸共和国）", "アフリカ", "1960/9/20", "", "単一国家", "大統領制", "🇨🇮"],
+            ["コモロ", "科摩羅", "コモロ連合", "アフリカ", "1975/11/12", "", "連邦制", "大統領制", "🇰🇲"],
+            ["コンゴ民主共和国", "-", "コンゴ民主共和国", "アフリカ", "1960/9/20", "", "単一国家", "半大統領制", "🇨🇩"],
+            ["コンゴ共和国", "剛果共和国", "コンゴ共和国", "アフリカ", "1960/9/20", "", "単一国家", "大統領制", "🇨🇬"],
+            ["サントメ・プリンシペ", "-", "サントメ・プリンシペ民主共和国", "アフリカ", "1975/9/16", "", "単一国家", "半大統領制", "🇸🇹"],
+            ["ザンビア", "賛比亜", "ザンビア共和国", "アフリカ", "1964/12/1", "", "単一国家", "大統領制", "🇿🇲"],
+            ["シエラレオネ", "獅子山", "シエラレオネ共和国", "アフリカ", "1961/9/27", "", "単一国家", "大統領制", "🇸🇱"],
+            ["ジブチ", "吉布提", "ジブティ共和国", "アフリカ", "1977/9/20", "", "単一国家", "半大統領制", "🇩🇯"],
+            ["ジンバブエ", "津巴布韋", "ジンバブエ共和国", "アフリカ", "1980/8/25", "", "単一国家", "大統領制", "🇿🇼"],
+            ["スーダン", "蘇丹", "スーダン共和国", "アフリカ", "1956/11/12", "", "単一国家", "軍政/暫定", "🇸🇩"],
+            ["エスワティニ", "史瓦帝尼", "エスワティニ王国", "アフリカ", "1968/9/24", "", "単一国家", "絶対君主制", "🇸🇿"],
+            ["セイシェル", "塞舌爾", "セイシェル共和国", "アフリカ", "1976/9/21", "", "単一国家", "大統領制", "🇸🇨"],
+            ["セネガル", "塞内加爾", "セネガル共和国", "アフリカ", "1960/9/28", "", "単一国家", "半大統領制", "🇸🇳"],
+            ["ソマリア", "索馬里", "ソマリア連邦共和国", "アフリカ", "1960/9/20", "政権崩壊からの移行中", "連邦制", "議院内閣制", "🇸🇴"],
+            ["タンザニア", "坦桑尼亜", "タンザニア連合共和国", "アフリカ", "1961/12/14", "", "連合構造", "大統領制", "🇹🇿"],
+            ["チャド", "乍得", "チャド共和国", "アフリカ", "1960/9/20", "", "単一国家", "大統領制", "🇹🇩"],
+            ["チュニジア", "突尼斯", "チュニジア共和国", "アフリカ", "1956/11/12", "", "単一国家", "大統領制", "🇹🇳"],
+            ["トーゴ", "多哥", "トーゴ共和国", "アフリカ", "1960/9/20", "", "単一国家", "大統領制", "🇹🇬"],
+            ["ナイジェリア", "尼日利亜", "ナイジェリア連邦共和国", "アフリカ", "1960/10/7", "", "連邦制", "大統領制", "🇳🇬"],
+            ["ナミビア", "納米比亜", "ナミビア共和国", "アフリカ", "1990/4/23", "", "単一国家", "半大統領制", "🇳🇦"],
+            ["ニジェール", "尼日爾", "ニジェール共和国", "アフリカ", "1960/9/20", "", "単一国家", "軍政/暫定", "🇳🇪"],
+            ["ブルキナファソ", "布基納法索", "ブルキナファソ", "アフリカ", "1960/9/20", "", "単一国家", "軍政/暫定", "🇧🇫"],
+            ["ブルンジ", "布隆迪", "ブルンジ共和国", "アフリカ", "1962/9/18", "", "単一国家", "大統領制", "🇧🇮"],
+            ["ベナン", "貝寧", "ベナン共和国", "アフリカ", "1960/9/20", "", "単一国家", "大統領制", "🇧🇯"],
+            ["ボツワナ", "博茨瓦納", "ボツワナ共和国", "アフリカ", "1966/10/17", "", "単一国家", "議院内閣制", "🇧🇼"],
+            ["マダガスカル", "馬達加斯加", "マダガスカル共和国", "アフリカ", "1960/9/20", "", "単一国家", "半大統領制", "🇲🇬"],
+            ["マラウイ", "馬拉維", "マラウイ共和国", "アフリカ", "1964/12/1", "", "単一国家", "大統領制", "🇲🇼"],
+            ["マリ", "馬里", "マリ共和国", "アフリカ", "1960/9/28", "", "単一国家", "軍政/暫定", "🇲🇱"],
+            ["モーリシャス", "毛里求斯", "モーリシャス共和国", "アフリカ", "1968/4/24", "", "単一国家", "議院内閣制", "🇲🇺"],
+            ["モーリタニア", "毛里塔尼亜", "モーリタニア・イスラム共和国", "アフリカ", "1961/10/27", "", "単一国家", "半大統領制", "🇲🇷"],
+            ["モザンビーク", "莫桑比克", "モザンビーク共和国", "アフリカ", "1975/9/16", "", "単一国家", "半大統領制", "🇲🇿"],
+            ["モロッコ", "摩洛哥", "モロッコ王国", "アフリカ", "1956/11/12", "", "単一国家", "立憲君主制", "🇲🇦"],
+            ["リビア", "利比亜", "リビア国", "アフリカ", "1955/12/14", "", "単一国家", "暫定統治", "🇱🇾"],
+            ["リベリア", "利比里亜", "リベリア共和国", "アフリカ", "1945/11/2", "", "単一国家", "大統領制", "🇱🇷"],
+            ["ルワンダ", "盧旺達", "ルワンダ共和国", "アフリカ", "1962/9/18", "", "単一国家", "半大統領制", "🇷🇼"],
+            ["レソト", "莱索托", "レソト王国", "アフリカ", "1966/10/17", "", "単一国家", "立憲君主制", "🇱🇸"],
+            ["赤道ギニア", "赤道幾内亜", "赤道ギニア共和国", "アフリカ", "1968/11/12", "", "単一国家", "大統領制", "🇬🇶"],
+            ["中央アフリカ", "中央阿弗利加", "中央アフリカ共和国", "アフリカ", "1960/9/20", "", "単一国家", "半大統領制", "🇨🇫"],
+            ["南アフリカ", "南阿弗利加", "南アフリカ共和国", "アフリカ", "1945/11/7", "", "単一国家", "議院内閣制", "🇿🇦"],
+            ["オーストラリア", "豪州", "オーストラリア連邦", "オセアニア", "1945/11/1", "", "連邦制", "議院内閣制", "🇦🇺"],
+            ["キリバス", "吉里巴斯", "キリバス共和国", "オセアニア", "1999/9/14", "", "単一国家", "大統領制", "🇰🇮"],
+            ["サモア", "薩摩亜", "サモア独立国", "オセアニア", "1976/12/15", "", "単一国家", "議院内閣制", "🇼🇸"],
+            ["ソロモン諸島", "所羅門諸島", "ソロモン諸島", "オセアニア", "1978/9/19", "", "単一国家", "議院内閣制", "🇸🇧"],
+            ["ツバル", "-", "ツバル国", "オセアニア", "2000/9/5", "", "単一国家", "議院内閣制", "🇹🇻"],
+            ["トンガ", "湯加", "トンガ王国", "オセアニア", "1999/9/14", "", "単一国家", "立憲君主制", "🇹🇴"],
+            ["ナウル", "瑙魯", "ナウル共和国", "オセアニア", "1999/9/14", "", "単一国家", "議院内閣制", "🇳🇷"],
+            ["ニュージーランド", "新西蘭", "ニュー・ジーランド", "オセアニア", "1945/10/24", "", "単一国家", "議院内閣制", "🇳🇿"],
+            ["バヌアツ", "瓦努阿圖", "バヌアツ共和国", "オセアニア", "1981/9/15", "", "単一国家", "議院内閣制", "🇻🇺"],
+            ["パプアニューギニア", "巴布亜新幾内亜", "パプアニューギニア", "オセアニア", "1975/10/10", "", "単一国家", "議院内閣制", "🇵🇬"],
+            ["パラオ", "帛琉", "パラオ共和国", "オセアニア", "1994/12/15", "", "単一国家", "大統領制", "🇵🇼"],
+            ["フィジー", "斐濟", "フィジー共和国", "オセアニア", "1970/10/13", "", "単一国家", "議院内閣制", "🇫🇯"],
+            ["マーシャル諸島", "馬紹爾諸島", "マーシャル諸島共和国", "オセアニア", "1991/9/17", "", "単一国家", "大統領制", "🇲🇭"],
+            ["ミクロネシア", "密克羅尼西亜", "ミクロネシア連邦", "オセアニア", "1991/9/17", "", "連邦制", "大統領制", "🇫🇲"],
+            ["アイスランド", "氷島", "アイスランド共和国", "ヨーロッパ", "1946/11/19", "", "単一国家", "議院内閣制", "🇮🇸"],
+            ["アイルランド", "愛蘭", "アイルランド", "ヨーロッパ", "1955/12/14", "", "単一国家", "議院内閣制", "🇮🇪"],
+            ["アゼルバイジャン", "亜塞拜然", "アゼルバイジャン共和国", "中東", "1992/3/2", "", "単一国家", "大統領制", "🇦🇿"],
+            ["アルバニア", "阿爾巴尼亜", "アルバニア共和国", "ヨーロッパ", "1955/12/14", "", "単一国家", "議院内閣制", "🇦🇱"],
+            ["アルメニア", "亜美尼亜", "アルメニア共和国", "中東", "1992/3/2", "", "単一国家", "議院内閣制", "🇦🇲"],
+            ["アンドラ", "安道爾", "アンドラ公国", "ヨーロッパ", "1993/7/28", "", "単一国家", "立憲君主制", "🇦🇩"],
+            ["イタリア", "伊太利亜", "イタリア共和国", "ヨーロッパ", "1955/12/14", "", "単一国家", "議院内閣制", "🇮🇹"],
+            ["ウクライナ", "烏克蘭", "ウクライナ", "ヨーロッパ", "1945/10/24", "", "単一国家", "半大統領制", "🇺🇦"],
+            ["ウズベキスタン", "烏茲別克斯坦", "ウズベキスタン共和国", "アジア", "1992/3/2", "", "単一国家", "大統領制", "🇺🇿"],
+            ["エストニア", "愛沙尼亜", "エストニア共和国", "ヨーロッパ", "1991/9/17", "", "単一国家", "議院内閣制", "🇪🇪"],
+            ["オーストリア", "墺太利", "オーストリア共和国", "ヨーロッパ", "1955/12/14", "", "連邦制", "議院内閣制", "🇦🇹"],
+            ["オランダ", "和蘭", "オランダ王国", "ヨーロッパ", "1945/12/10", "", "構成国連合", "立憲君主制", "🇳🇱"],
+            ["カザフスタン", "哈薩克斯坦", "カザフスタン共和国", "アジア", "1992/3/2", "", "単一国家", "大統領制", "🇰🇿"],
+            ["キプロス", "塞浦路斯", "キプロス共和国", "中東", "1960/9/20", "", "単一国家", "大統領制", "🇨🇾"],
+            ["ギリシャ", "希臘", "ギリシャ共和国", "ヨーロッパ", "1945/10/25", "", "単一国家", "議院内閣制", "🇬🇷"],
+            ["キルギス", "吉爾吉斯", "キルギス共和国", "アジア", "1992/3/2", "", "単一国家", "大統領制", "🇰🇬"],
+            ["ジョージア", "喬治亜", "ジョージア", "ヨーロッパ", "1992/7/31", "", "単一国家", "議院内閣制", "🇬🇪"],
+            ["クロアチア", "克羅地亜", "クロアチア共和国", "ヨーロッパ", "1992/5/22", "", "単一国家", "議院内閣制", "🇭🇷"],
+            ["サンマリノ", "聖馬力諾", "サンマリノ共和国", "ヨーロッパ", "1992/3/2", "", "単一国家", "集団元首", "🇸🇲"],
+            ["スイス", "瑞西", "スイス連邦", "ヨーロッパ", "2002/9/10", "", "連邦制", "集団元首/直接民主", "🇨🇭"],
+            ["スウェーデン", "瑞典", "スウェーデン王国", "ヨーロッパ", "1946/11/19", "", "単一国家", "立憲君主制", "🇸🇪"],
+            ["スペイン", "西班牙", "スペイン王国", "ヨーロッパ", "1955/12/14", "", "自治州制", "立憲君主制", "🇪🇸"],
+            ["スロバキア", "斯洛伐克", "スロバキア共和国", "ヨーロッパ", "1993/1/19", "", "単一国家", "議院内閣制", "🇸🇰"],
+            ["スロベニア", "斯洛文尼亜", "スロベニア共和国", "ヨーロッパ", "1992/5/22", "", "単一国家", "議院内閣制", "🇸🇮"],
+            ["セルビア", "塞爾維亜", "セルビア共和国", "ヨーロッパ", "2000/11/1", "", "単一国家", "議院内閣制", "🇷🇸"],
+            ["タジキスタン", "塔吉克斯坦", "タジキスタン共和国", "アジア", "1992/3/2", "", "単一国家", "大統領制", "🇹🇯"],
+            ["チェコ", "捷克", "チェコ共和国", "ヨーロッパ", "1993/1/19", "", "単一国家", "議院内閣制", "🇨🇿"],
+            ["デンマーク", "丁抹", "デンマーク王国", "ヨーロッパ", "1945/10/24", "", "単一国家", "立憲君主制", "🇩🇰"],
+            ["ドイツ", "独逸", "ドイツ連邦共和国", "ヨーロッパ", "1973/9/18", "", "連邦制", "議院内閣制", "🇩🇪"],
+            ["トルクメニスタン", "土庫曼斯坦", "トルクメニスタン", "アジア", "1992/3/2", "", "単一国家", "大統領制", "🇹🇲"],
+            ["ノルウェー", "諾威", "ノルウェー王国", "ヨーロッパ", "1945/11/27", "", "単一国家", "立憲君主制", "🇳🇴"],
+            ["バチカン", "和地関", "バチカン市国", "ヨーロッパ", "国連未加盟", "常任観察員国", "単一国家", "絶対君主制/神権", "🇻🇦"],
+            ["ハンガリー", "洪牙利", "ハンガリー共和国", "ヨーロッパ", "1955/12/14", "※2012年以降正式名は「ハンガリー」", "単一国家", "議院内閣制", "🇭🇺"],
+            ["フィンランド", "芬蘭", "フィンランド共和国", "ヨーロッパ", "1955/12/14", "", "単一国家", "半大統領制", "🇫🇮"],
+            ["フランス", "仏蘭西", "フランス共和国", "ヨーロッパ", "1945/10/24", "国連常任理事国", "単一国家", "半大統領制", "🇫🇷"],
+            ["ブルガリア", "勃牙利", "ブルガリア共和国", "ヨーロッパ", "1955/12/14", "", "単一国家", "議院内閣制", "🇧🇬"],
+            ["ベラルーシ", "白露西亜", "ベラルーシ共和国", "ヨーロッパ", "1945/10/24", "", "単一国家", "大統領制", "🇧🇾"],
+            ["ベルギー", "白耳義", "ベルギー王国", "ヨーロッパ", "1945/12/27", "", "連邦制", "立憲君主制", "🇧🇪"],
+            ["ポーランド", "波蘭", "ポーランド共和国", "ヨーロッパ", "1945/10/24", "", "単一国家", "半大統領制", "🇵🇱"],
+            ["ボスニア・ヘルツェゴビナ", "波斯尼亜・赫塞哥維納", "ボスニア・ヘルツェゴビナ", "ヨーロッパ", "1992/5/22", "", "複合連邦", "集団元首", "🇧🇦"],
+            ["ポルトガル", "葡萄牙", "ポルトガル共和国", "ヨーロッパ", "1955/12/14", "", "単一国家", "半大統領制", "🇵🇹"],
+            ["北マケドニア", "北馬其頓", "北マケドニア共和国", "ヨーロッパ", "1993/4/8", "", "単一国家", "議院内閣制", "🇲🇰"],
+            ["マルタ", "馬爾他", "マルタ共和国", "ヨーロッパ", "1964/12/1", "", "単一国家", "議院内閣制", "🇲🇹"],
+            ["モナコ", "摩納哥", "モナコ公国", "ヨーロッパ", "1993/5/28", "事実上の公交あり", "単一国家", "立憲君主制", "🇲🇨"],
+            ["モルドバ", "摩爾多瓦", "モルドバ共和国", "ヨーロッパ", "1992/3/2", "", "単一国家", "議院内閣制", "🇲🇩"],
+            ["ラトビア", "拉脱維亜", "ラトビア共和国", "ヨーロッパ", "1991/9/17", "", "単一国家", "議院内閣制", "🇱🇻"],
+            ["リトアニア", "立陶宛", "リトアニア共和国", "ヨーロッパ", "1991/9/17", "", "単一国家", "半大統領制", "🇱🇹"],
+            ["リヒテンシュタイン", "列支敦士登", "リヒテンシュタイン公国", "ヨーロッパ", "1990/9/18", "", "単一国家", "立憲君主制", "🇱🇮"],
+            ["ルーマニア", "羅馬尼亜", "ルーマニア", "ヨーロッパ", "1955/12/14", "", "単一国家", "半大統領制", "🇷🇴"],
+            ["ルクセンブルク", "盧森堡", "ルクセンブルク大公国", "ヨーロッパ", "1945/10/24", "", "単一国家", "立憲君主制", "🇱🇺"],
+            ["ロシア", "露西亜", "ロシア連邦", "ヨーロッパ", "1945/10/24", "国連常任理事国", "連邦制", "半大統領制", "🇷🇺"],
+            ["英国／イギリス", "英吉利", "グレートブリテンおよび北部アイルランド連合王国", "ヨーロッパ", "1945/10/24", "国連常任理事国", "単一/権限委譲", "立憲君主制", "🇬🇧"],
+            ["アフガニスタン", "阿富汗", "アフガニスタン・イスラム共和国", "アジア", "1946/11/19", "※実質タリバン統治", "単一国家", "神権/首長制", "🇦🇫"],
+            ["アラブ首長国連邦", "阿拉伯首長国連邦", "アラブ首長国連邦", "中東", "1971/12/9", "", "連邦制", "首長制", "🇦🇪"],
+            ["イエメン", "也門", "イエメン共和国", "中東", "1947/9/30", "", "単一国家", "大統領制", "🇾🇪"],
+            ["イスラエル", "以色列", "イスラエル国", "中東", "1949/5/11", "", "単一国家", "議院内閣制", "🇮🇱"],
+            ["イラク", "伊拉克", "イラク共和国", "中東", "1945/12/21", "", "連邦制", "議院内閣制", "🇮🇶"],
+            ["イラン", "伊朗", "イラン・イスラム共和国", "中東", "1945/10/24", "", "単一国家", "神権共和制", "🇮🇷"],
+            ["オマーン", "阿曼", "オマーン国", "中東", "1971/10/7", "", "単一国家", "絶対君主制", "🇴🇲"],
+            ["カタール", "喀塔爾", "カタール国", "中東", "1971/9/21", "", "単一国家", "絶対君主制", "🇶🇦"],
+            ["クウェート", "科威特", "クウェート国", "中東", "1963/5/14", "", "単一国家", "立憲首長制", "🇰🇼"],
+            ["サウジアラビア", "沙特阿拉伯", "サウジアラビア王国", "中東", "1945/10/24", "", "単一国家", "絶対君主制", "🇸🇦"],
+            ["シリア", "叙利亜", "シリア・アラブ共和国", "中東", "1945/10/24", "", "単一国家", "大統領制", "🇸🇾"],
+            ["トルコ", "土耳古", "トルコ共和国", "中東", "1945/10/24", "", "単一国家", "大統領制", "🇹🇷"],
+            ["バーレーン", "巴林", "バーレーン王国", "中東", "1971/9/21", "", "単一国家", "立憲君主制", "🇧🇭"],
+            ["ヨルダン", "約旦", "ヨルダン・ハシミテ王国", "中東", "1955/12/14", "", "単一国家", "立憲君主制", "🇯🇴"],
+            ["レバノン", "黎巴嫩", "レバノン共和国", "中東", "1945/10/24", "", "単一国家", "議院内閣制", "🇱🇧"],
+            ["アルゼンチン", "亜爾然丁", "アルゼンチン共和国", "南アメリカ", "1945/10/24", "", "連邦制", "大統領制", "🇦🇷"],
+            ["アンチグアバーブーダ", "安提瓜・巴布達", "アンチグア・バーブーダ", "北アメリカ", "1981/11/11", "", "単一国家", "議院内閣制", "🇦🇬"],
+            ["ウルグアイ", "宇柳具", "ウルグアイ東方共和国", "南アメリカ", "1945/12/18", "", "単一国家", "大統領制", "🇺🇾"],
+            ["エクアドル", "厄瓜多", "エクアドル共和国", "南アメリカ", "1945/12/21", "", "単一国家", "大統領制", "🇪🇨"],
+            ["エルサルバドル", "薩爾瓦多", "エルサルバドル共和国", "北アメリカ", "1945/10/24", "", "単一国家", "大統領制", "🇸🇻"],
+            ["ガイアナ", "蓋亜那", "ガイアナ協同共和国", "南アメリカ", "1966/9/20", "", "単一国家", "大統領制", "🇬🇾"],
+            ["キューバ", "玖馬", "キューバ共和国", "北アメリカ", "1945/10/24", "", "単一国家", "一党執政", "🇨🇺"],
+            ["グアテマラ", "危地馬拉", "グアテマラ共和国", "北アメリカ", "1945/11/21", "", "単一国家", "大統領制", "🇬🇹"],
+            ["グレナダ", "格林納達", "グレナダ", "北アメリカ", "1974/9/17", "", "単一国家", "議院内閣制", "🇬🇩"],
+            ["コスタリカ", "哥斯達黎加", "コスタリカ共和国", "北アメリカ", "1945/11/2", "", "単一国家", "大統領制", "🇨🇷"],
+            ["コロンビア", "哥倫比亜", "コロンビア共和国", "南アメリカ", "1945/11/5", "", "単一国家", "大統領制", "🇨🇴"],
+            ["ジャマイカ", "牙買加", "ジャマイカ", "北アメリカ", "1962/9/18", "", "単一国家", "議院内閣制", "🇯🇲"],
+            ["スリナム", "蘇里南", "スリナム共和国", "南アメリカ", "1975/12/4", "", "単一国家", "大統領制", "🇸🇷"],
+            ["セントクリストファーネビス", "聖基茨・尼維斯", "セントクリストファー・ネイビス", "北アメリカ", "1983/9/23", "", "連邦制", "議院内閣制", "🇰🇳"],
+            ["セントビンセント・グレナディーン", "聖文森・格林納丁", "セントビンセントおよびグレナディーン諸島", "北アメリカ", "1980/9/16", "", "単一国家", "議院内閣制", "🇻🇨"],
+            ["セントルシア", "聖盧西亜", "セントルシア", "北アメリカ", "1979/9/18", "", "単一国家", "議院内閣制", "🇱🇨"],
+            ["チリ", "智利", "チリ共和国", "南アメリカ", "1945/10/24", "", "単一国家", "大統領制", "🇨🇱"],
+            ["ドミニカ共和国", "土弥尼加共和国", "ドミニカ共和国", "北アメリカ", "1945/10/24", "", "単一国家", "大統領制", "🇩🇴"],
+            ["ドミニカ国", "土弥尼加国", "ドミニカ国", "北アメリカ", "1978/12/18", "", "単一国家", "議院内閣制", "🇩🇲"],
+            ["トリニダード・トバゴ", "千里達・托巴哥", "トリニダード・トバゴ共和国", "南アメリカ", "1962/9/18", "", "単一国家", "議院内閣制", "🇹🇹"],
+            ["ニカラグア", "尼加拉瓜", "ニカラグア共和国", "北アメリカ", "1945/10/24", "", "単一国家", "大統領制", "🇳🇮"],
+            ["ハイチ", "海地", "ハイチ共和国", "北アメリカ", "1945/10/24", "", "単一国家", "半大統領制", "🇭🇹"],
+            ["パナマ", "巴奈馬", "パナマ共和国", "北アメリカ", "1945/11/13", "", "単一国家", "大統領制", "🇵🇦"],
+            ["バハマ", "巴哈馬", "バハマ国", "北アメリカ", "1973/9/18", "", "単一国家", "議院内閣制", "🇧🇸"],
+            ["パラグアイ", "巴拉圭", "パラグアイ共和国", "南アメリカ", "1945/10/24", "", "単一国家", "大統領制", "🇵🇾"],
+            ["バルバドス", "巴巴多斯", "バルバドス", "北アメリカ", "1966/12/9", "", "単一国家", "議院内閣制", "🇧🇧"],
+            ["ブラジル", "伯剌西爾", "ブラジル連邦共和国", "南アメリカ", "1945/10/24", "", "連邦制", "大統領制", "🇧🇷"],
+            ["ベネズエラ", "委内瑞拉", "ベネズエラ・ボリバル共和国", "南アメリカ", "1945/11/15", "", "連邦制", "大統領制", "🇻🇪"],
+            ["ベリーズ", "伯利茲", "ベリーズ", "北アメリカ", "1981/9/25", "", "単一国家", "議院内閣制", "🇧🇿"],
+            ["ペルー", "秘露", "ペルー共和国", "南アメリカ", "1945/10/31", "", "単一国家", "大統領制", "🇵🇪"],
+            ["ボリビア", "玻利維亜", "ボリビア多民族国", "南アメリカ", "1945/11/14", "", "単一国家", "大統領制", "🇧🇴"],
+            ["ホンジュラス", "洪都拉斯", "ホンジュラス共和国", "北アメリカ", "1945/12/17", "", "単一国家", "大統領制", "🇭🇳"],
+            ["メキシコ", "墨西哥", "メキシコ合衆国", "北アメリカ", "1945/11/7", "", "連邦制", "大統領制", "🇲🇽"],
+            ["カナダ", "加奈陀", "カナダ", "北アメリカ", "1945/11/9", "", "連邦制", "議院内閣制", "🇨🇦"],
+            ["米国", "米国", "アメリカ合衆国", "北アメリカ", "1945/10/24", "国連常任理事国", "連邦制", "大統領制", "🇺🇸"],
+            ["南スーダン", "南蘇丹", "南スーダン共和国", "アフリカ", "2011/7/14", "2011年独立", "単一国家", "大統領制", "🇸🇸"],
+            ["モンテネグロ", "黒山", "モンテネグロ", "ヨーロッパ", "2006/6/28", "旧ユーゴスラビア", "単一国家", "議院内閣制", "🇲🇪"],
+            ["クック諸島", "庫克諸島", "クック諸島", "オセアニア", "国連未加盟", "日本は国家承認", "自由連合", "議院内閣制", "🇨🇰"],
+            ["ニウエ", "紐埃", "ニウエ", "オセアニア", "国連未加盟", "日本は国家承認", "自由連合", "議院内閣制", "🇳🇺"],
+            ["コソボ", "科索沃", "コソボ共和国", "ヨーロッパ", "国連未加盟", "日本は国家承認", "単一国家", "議院内閣制", "🇽🇰"],
+            ["台湾", "台湾", "台湾／中華民国", "アジア", "未承認", "実質的自治地域", "単一国家", "半大統領制", "🇹🇼"],
+            ["西サハラ", "西撒哈拉", "サハラ・アラブ民主共和国（西サハラ）", "アフリカ", "未承認", "帰属未定地域", "単一国家", "半大統領制", "🇪🇭"],
+            ["パレスチナ", "巴勒斯坦", "パレスチナ", "中東", "未承認", "国連オブザーバー国家", "単一国家", "半大統領制", "🇵🇸"],
+            ["香港", "香港", "香港特別行政区", "アジア", "中国特別行政区", "一国二制度", "特別行政区", "行政長官制", "🇭🇰"],
+            ["マカオ", "澳門", "マカオ特別行政区", "アジア", "中国特別行政区", "一国二制度", "特別行政区", "行政長官制", "🇲🇴"]
+        ];
+
+        // --- HELPER FUNCTION: Categorize strictly by Official Title Suffix Pattern ---
+        function classifySuffixCategory(officialName) {
+            const name = officialName.trim();
+            if (name.endsWith('独立国')) return 'dokuritsukoku';
+            if (name.endsWith('合衆国')) return 'goushuukoku';
+            if (name.endsWith('連合王国') || name.includes('連合王国')) return 'rengou_ougoku';
+            if (name.endsWith('連合共和国')) return 'rengou_kyouwakoku';
+            if (name.endsWith('連邦民主共和国')) return 'renpou_minshu_kyouwakoku';
+            if (name.endsWith('連邦共和国')) return 'renpou_kyouwakoku';
+            if (name.endsWith('連邦')) return 'renpou';
+            if (name.endsWith('連合')) return 'rengou';
+            if (name.endsWith('大公国')) return 'taikougoku';
+            if (name.endsWith('公国')) return 'kougoku_pure';
+            if (name.endsWith('王国')) return 'ougoku_pure';
+            if (name.endsWith('市国')) return 'shikoku';
+            if (name.endsWith('東方共和国')) return 'touhou_kyouwakoku';
+            if (name.endsWith('協同共和国')) return 'kyoudou_kyouwakoku';
+            if (name.endsWith('ボリバル共和国')) return 'bolivar_kyouwakoku';
+            if (name.endsWith('多民族国')) return 'taminzoku_koku';
+            if (name.endsWith('社会主義共和国')) return 'shakaishugi_kyouwakoku';
+            if (name.endsWith('イスラム共和国')) return 'islam_kyouwakoku';
+            if (name.includes('人民共和国')) return 'jinmin_kyouwakoku';
+            if (name.includes('民主共和国')) return 'minshu_kyouwakoku';
+            if (name.endsWith('共和国') || name.endsWith('共和国）')) return 'kyouwakoku_pure';
+            if (name.endsWith('国')) return 'koku_pure';
+            return 'none'; // 名前に後置詞なし（国名のみ）
+        }
+
+        // Format raw database array into object collection
+        const ALL_COUNTRIES_DATABASE = RAW_USER_DATA.map((item, idx) => {
+            const shortName = item[0];
+            const kanjiName = item[1];
+            const officialName = item[2];
+            const region = item[3];
+            const unDate = item[4];
+            const notes = item[5];
+            const structure = item[6];
+            const governance = item[7];
+            const flag = item[8];
+
+            const tabCategory = classifySuffixCategory(officialName);
+
+            return {
+                id: `country_${idx + 1}`,
+                shortName,
+                kanjiName,
+                officialName,
+                region,
+                unDate,
+                notes,
+                structure,
+                governance,
+                flag,
+                tabCategory,
+                tags: [structure, governance, region].filter(Boolean)
+            };
+        });
+
+        // --- 3. APPLICATION STATE ---
+        let viewMode = 'suffix'; // 'suffix' | 'region' | 'structure'
+        let currentSubTab = 'all';
+        let currentSecondaryTab = 'kyouwakoku_all'; // 2階層目用ステート
+        let searchQuery = '';
+        let currentSort = 'official';
+        let showBookmarksOnly = false;
+        let bookmarkedIds = JSON.parse(localStorage.getItem('official_title_bookmarks_2026') || '[]');
+        let activeModalCountryId = null;
+
+        // --- 4. INITIALIZATION ---
+        window.onload = function() {
+            renderSubNavTabs();
+            renderCountries();
+            updateBookmarkCount();
+            populateCompareSelectors();
+        };
+
+        // --- 5. VIEW MODE SWITCHER & TAB RENDER ---
+        function switchViewMode(mode) {
+            viewMode = mode;
+            currentSubTab = 'all';
+            currentSecondaryTab = (mode === 'suffix') ? 'kyouwakoku_all' : '';
+            
+            // Update active state of mode buttons
+            ['suffix', 'region', 'structure'].forEach(m => {
+                const btn = document.getElementById(`mode-btn-${m}`);
+                if (m === mode) {
+                    btn.className = 'px-3 sm:px-4 py-1.5 rounded-lg transition bg-navy-900 text-white shadow whitespace-nowrap font-bold';
+                } else {
+                    btn.className = 'px-3 sm:px-4 py-1.5 rounded-lg transition text-slate-600 hover:text-navy-900 whitespace-nowrap font-medium';
+                }
+            });
+
+            renderSubNavTabs();
+            renderCountries();
+        }
+
+        function getActiveTabList() {
+            if (viewMode === 'suffix') return SUFFIX_TABS;
+            if (viewMode === 'region') return REGION_TABS;
+            if (viewMode === 'structure') return STRUCTURE_TABS;
+            return SUFFIX_TABS;
+        }
+
+        // 公国グループ判定（〜公国、〜大公国）
+        function isPrincipalityGroup(c) {
+            const cat = c.tabCategory;
+            return ['kougoku_pure', 'taikougoku'].includes(cat);
+        }
+
+        // 王国グループ判定（〜王国、〜連合王国）
+        function isKingdomGroup(c) {
+            const cat = c.tabCategory;
+            return ['ougoku_pure', 'rengou_ougoku'].includes(cat);
+        }
+
+        // 共和国グループ判定（連邦を除くすべての共和国系）
+        function isRepublicGroup(c) {
+            const cat = c.tabCategory;
+            return [
+                'kyouwakoku_pure', 'islam_kyouwakoku', 'bolivar_kyouwakoku', 
+                'touhou_kyouwakoku', 'kyoudou_kyouwakoku', 'jinmin_kyouwakoku', 
+                'minshu_kyouwakoku', 'shakaishugi_kyouwakoku'
+            ].includes(cat);
+        }
+
+        function getTabCount(tabId, subId = null) {
+            if (tabId === 'all') return ALL_COUNTRIES_DATABASE.length;
+
+            if (viewMode === 'suffix') {
+                if (tabId === 'kougoku_group') {
+                    if (!subId || subId === 'kougoku_all') {
+                        return ALL_COUNTRIES_DATABASE.filter(isPrincipalityGroup).length;
+                    }
+                    if (subId === 'kougoku_pure') {
+                        return ALL_COUNTRIES_DATABASE.filter(c => c.tabCategory === 'kougoku_pure').length;
+                    }
+                    if (subId === 'taikougoku') {
+                        return ALL_COUNTRIES_DATABASE.filter(c => c.tabCategory === 'taikougoku').length;
+                    }
+                    return ALL_COUNTRIES_DATABASE.filter(c => c.tabCategory === subId).length;
+                }
+                if (tabId === 'ougoku_group') {
+                    if (!subId || subId === 'ougoku_all') {
+                        return ALL_COUNTRIES_DATABASE.filter(isKingdomGroup).length;
+                    }
+                    if (subId === 'ougoku_pure') {
+                        return ALL_COUNTRIES_DATABASE.filter(c => c.tabCategory === 'ougoku_pure').length;
+                    }
+                    if (subId === 'rengou_ougoku') {
+                        return ALL_COUNTRIES_DATABASE.filter(c => c.tabCategory === 'rengou_ougoku').length;
+                    }
+                    return ALL_COUNTRIES_DATABASE.filter(c => c.tabCategory === subId).length;
+                }
+                if (tabId === 'kyouwakoku_group') {
+                    if (!subId || subId === 'kyouwakoku_all') {
+                        return ALL_COUNTRIES_DATABASE.filter(isRepublicGroup).length;
+                    }
+                    if (subId === 'kyouwakoku_pure') {
+                        return ALL_COUNTRIES_DATABASE.filter(c => c.tabCategory === 'kyouwakoku_pure').length;
+                    }
+                    return ALL_COUNTRIES_DATABASE.filter(c => c.tabCategory === subId).length;
+                }
+                return ALL_COUNTRIES_DATABASE.filter(c => c.tabCategory === tabId).length;
+            } else if (viewMode === 'region') {
+                return ALL_COUNTRIES_DATABASE.filter(c => c.region === tabId).length;
+            } else if (viewMode === 'structure') {
+                return ALL_COUNTRIES_DATABASE.filter(c => c.structure.includes(tabId) || c.governance.includes(tabId) || c.tags.includes(tabId)).length;
+            }
+            return 0;
+        }
+
+        function renderSubNavTabs() {
+            const container = document.getElementById('tab-container');
+            const tabList = getActiveTabList();
+
+            let html = '<div class="flex flex-col w-full space-y-2">';
+
+            // 1階層目（メインサブタブ）
+            html += '<div class="flex overflow-x-auto no-scrollbar space-x-1 py-1 text-xs font-medium">';
+            html += tabList.map(tab => {
+                const count = getTabCount(tab.id);
+                const isActive = currentSubTab === tab.id;
+                const activeStyle = isActive 
+                    ? 'bg-amber-500 text-navy-950 font-bold shadow-md' 
+                    : 'bg-navy-950 text-slate-300 hover:bg-navy-800 hover:text-white border border-navy-800';
+                
+                return `
+                    <button onclick="selectSubTab('${tab.id}')" class="px-3 py-1.5 rounded-xl transition whitespace-nowrap flex items-center gap-1.5 ${activeStyle}">
+                        <span>${tab.label}</span>
+                        <span class="text-[10px] px-1.5 py-0.2 rounded-full ${isActive ? 'bg-navy-950 text-amber-400' : 'bg-navy-800 text-slate-400'} font-bold">${count}</span>
+                    </button>
+                `;
+            }).join('');
+            html += '</div>';
+
+            // 2階層目（「公国グループ」「王国グループ」「共和国グループ」が選択された場合のみ表示）
+            if (viewMode === 'suffix' && (currentSubTab === 'kougoku_group' || currentSubTab === 'ougoku_group' || currentSubTab === 'kyouwakoku_group')) {
+                const groupObj = SUFFIX_TABS.find(t => t.id === currentSubTab);
+                let groupLabel = '└ 共和国内分類:';
+                if (currentSubTab === 'kougoku_group') groupLabel = '└ 公国内分類:';
+                if (currentSubTab === 'ougoku_group') groupLabel = '└ 王国内分類:';
+
+                if (groupObj && groupObj.subTabs) {
+                    html += '<div class="flex overflow-x-auto no-scrollbar space-x-1 py-1.5 border-t border-navy-800/80 bg-navy-950/60 rounded-xl px-2 text-xs">';
+                    html += `<span class="text-amber-400 font-bold self-center pr-2 text-[11px] whitespace-nowrap">${groupLabel}</span>`;
+                    html += groupObj.subTabs.map(sub => {
+                        const count = getTabCount(currentSubTab, sub.id);
+                        const isSubActive = currentSecondaryTab === sub.id;
+                        const subStyle = isSubActive
+                            ? 'bg-amber-400 text-navy-950 font-bold shadow'
+                            : 'bg-navy-800 text-slate-300 hover:bg-navy-700 hover:text-white border border-navy-700';
+
+                        return `
+                            <button onclick="selectSecondaryTab('${sub.id}')" class="px-2.5 py-1 rounded-lg transition whitespace-nowrap flex items-center gap-1 text-[11px] ${subStyle}">
+                                <span>${sub.label}</span>
+                                <span class="text-[9px] opacity-80 font-bold">(${count})</span>
+                            </button>
+                        `;
+                    }).join('');
+                    html += '</div>';
+                }
+            }
+
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        function selectSubTab(tabId) {
+            currentSubTab = tabId;
+            if (tabId === 'kougoku_group') {
+                currentSecondaryTab = 'kougoku_all';
+            } else if (tabId === 'ougoku_group') {
+                currentSecondaryTab = 'ougoku_all';
+            } else if (tabId === 'kyouwakoku_group') {
+                currentSecondaryTab = 'kyouwakoku_all';
+            }
+            showBookmarksOnly = false;
+            document.getElementById('bookmark-filter-btn').classList.remove('bg-amber-500', 'text-navy-950');
+            renderSubNavTabs();
+            renderCountries();
+        }
+
+        function selectSecondaryTab(subId) {
+            currentSecondaryTab = subId;
+            renderSubNavTabs();
+            renderCountries();
+        }
+
+        // --- 6. CORE RENDER PIPELINE ---
+        function renderCountries() {
+            const grid = document.getElementById('countries-grid');
+            const emptyState = document.getElementById('empty-state');
+            const titleEl = document.getElementById('current-tab-title');
+            const countEl = document.getElementById('results-count-text');
+
+            let filtered = ALL_COUNTRIES_DATABASE;
+
+            // 1. Mode Sub-Tab Filtering
+            if (currentSubTab !== 'all') {
+                if (viewMode === 'suffix') {
+                    if (currentSubTab === 'kougoku_group') {
+                        if (currentSecondaryTab === 'kougoku_all') {
+                            filtered = filtered.filter(isPrincipalityGroup);
+                        } else if (currentSecondaryTab === 'kougoku_pure') {
+                            filtered = filtered.filter(c => c.tabCategory === 'kougoku_pure');
+                        } else if (currentSecondaryTab === 'taikougoku') {
+                            filtered = filtered.filter(c => c.tabCategory === 'taikougoku');
+                        } else {
+                            filtered = filtered.filter(c => c.tabCategory === currentSecondaryTab);
+                        }
+                    } else if (currentSubTab === 'ougoku_group') {
+                        if (currentSecondaryTab === 'ougoku_all') {
+                            filtered = filtered.filter(isKingdomGroup);
+                        } else if (currentSecondaryTab === 'ougoku_pure') {
+                            filtered = filtered.filter(c => c.tabCategory === 'ougoku_pure');
+                        } else {
+                            filtered = filtered.filter(c => c.tabCategory === currentSecondaryTab);
+                        }
+                    } else if (currentSubTab === 'kyouwakoku_group') {
+                        if (currentSecondaryTab === 'kyouwakoku_all') {
+                            filtered = filtered.filter(isRepublicGroup);
+                        } else if (currentSecondaryTab === 'kyouwakoku_pure') {
+                            filtered = filtered.filter(c => c.tabCategory === 'kyouwakoku_pure');
+                        } else {
+                            filtered = filtered.filter(c => c.tabCategory === currentSecondaryTab);
+                        }
+                    } else {
+                        filtered = filtered.filter(c => c.tabCategory === currentSubTab);
+                    }
+                } else if (viewMode === 'region') {
+                    filtered = filtered.filter(c => c.region === currentSubTab);
+                } else if (viewMode === 'structure') {
+                    filtered = filtered.filter(c => c.structure.includes(currentSubTab) || c.governance.includes(currentSubTab) || c.tags.includes(currentSubTab));
+                }
+            }
+
+            // 2. Search Query Filtering
+            if (searchQuery) {
+                filtered = filtered.filter(c => {
+                    const oMatch = c.officialName.toLowerCase().includes(searchQuery);
+                    const sMatch = c.shortName.toLowerCase().includes(searchQuery);
+                    const kMatch = c.kanjiName.toLowerCase().includes(searchQuery);
+                    const uMatch = c.unDate.toLowerCase().includes(searchQuery);
+                    const nMatch = c.notes.toLowerCase().includes(searchQuery);
+                    const tagMatch = c.tags.some(t => t.toLowerCase().includes(searchQuery));
+                    return oMatch || sMatch || kMatch || uMatch || nMatch || tagMatch;
+                });
+            }
+
+            // 3. Bookmarks Filtering
+            if (showBookmarksOnly) {
+                filtered = filtered.filter(c => bookmarkedIds.includes(c.id));
+            }
+
+            // 4. Sorting
+            if (currentSort === 'official') {
+                filtered.sort((a, b) => a.officialName.localeCompare(b.officialName, 'ja'));
+            } else if (currentSort === 'common') {
+                filtered.sort((a, b) => a.shortName.localeCompare(b.shortName, 'ja'));
+            } else if (currentSort === 'un') {
+                filtered.sort((a, b) => a.unDate.localeCompare(b.unDate, 'ja'));
+            } else if (currentSort === 'region') {
+                filtered.sort((a, b) => a.region.localeCompare(b.region, 'ja'));
+            }
+
+            // Set Header Titles
+            if (showBookmarksOnly) {
+                titleEl.textContent = 'ブックマーク保存済みの国・地域';
+            } else if (searchQuery) {
+                titleEl.textContent = `検索結果: "${searchQuery}"`;
+            } else {
+                const tabList = getActiveTabList();
+                const activeTabObj = tabList.find(t => t.id === currentSubTab);
+                if ((currentSubTab === 'kougoku_group' || currentSubTab === 'ougoku_group' || currentSubTab === 'kyouwakoku_group') && activeTabObj && activeTabObj.subTabs) {
+                    const subObj = activeTabObj.subTabs.find(s => s.id === currentSecondaryTab);
+                    let prefix = '共和国';
+                    if (currentSubTab === 'kougoku_group') prefix = '公国';
+                    if (currentSubTab === 'ougoku_group') prefix = '王国';
+                    titleEl.textContent = subObj ? `${prefix} > ${subObj.label}` : `${prefix}系 一覧`;
+                } else {
+                    titleEl.textContent = activeTabObj ? `${activeTabObj.label} 一覧` : 'すべての国・地域';
+                }
+            }
+            countEl.textContent = `該当: ${filtered.length} か国・地域`;
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            } else {
+                emptyState.classList.add('hidden');
+            }
+
+            // Render Cards Grid
+            grid.innerHTML = filtered.map(c => {
+                const isBookmarked = bookmarkedIds.includes(c.id);
+                const bookmarkClass = isBookmarked ? 'text-amber-500 fill-amber-500' : 'text-slate-300 hover:text-amber-500';
+
+                return `
+                    <div onclick="openDetailModal('${c.id}')" class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:shadow-md hover:border-navy-700 transition cursor-pointer flex flex-col justify-between group relative">
+                        <div>
+                            <!-- Header with Formal Official Title -->
+                            <div class="flex items-start justify-between gap-2 mb-2">
+                                <div class="flex items-center space-x-3">
+                                    <span class="text-3xl sm:text-4xl">${c.flag}</span>
+                                    <div>
+                                        <h3 class="text-base font-bold text-navy-900 group-hover:text-amber-600 transition leading-snug">
+                                            ${c.officialName}
+                                        </h3>
+                                        <div class="flex items-center space-x-2 text-xs text-slate-500 font-medium mt-0.5">
+                                            <span>通称: ${c.shortName}</span>
+                                            ${c.kanjiName && c.kanjiName !== '-' ? `<span class="bg-amber-100 text-amber-900 font-serif text-[10px] px-1.5 py-0.2 rounded font-bold">${c.kanjiName}</span>` : ''}
+                                        </div>
+                                    </div>
+                                </div>
+                                <button onclick="toggleBookmark(event, '${c.id}')" class="p-1.5 rounded-lg hover:bg-slate-100 transition" title="保存">
+                                    <svg class="w-5 h-5 ${bookmarkClass}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
+                                </button>
+                            </div>
+
+                            <!-- Attributes Badges -->
+                            <div class="flex flex-wrap gap-1.5 my-2.5">
+                                <span class="bg-navy-50 text-navy-800 font-bold text-[11px] px-2.5 py-0.5 rounded-md border border-navy-100">
+                                    ${c.structure}
+                                </span>
+                                <span class="bg-slate-100 text-slate-700 font-medium text-[11px] px-2.5 py-0.5 rounded-md border border-slate-200">
+                                    政体: ${c.governance}
+                                </span>
+                                ${c.notes ? `<span class="bg-red-50 text-red-700 font-bold text-[10px] px-2 py-0.5 rounded-md border border-red-200">${c.notes}</span>` : ''}
+                            </div>
+
+                            <!-- Key Fact Line -->
+                            <div class="text-xs text-slate-600 space-y-1 mb-3 bg-slate-50 p-2.5 rounded-xl border border-slate-100">
+                                <div class="flex justify-between">
+                                    <span class="text-slate-400">国連加盟年月日:</span>
+                                    <span class="font-bold text-navy-900">${c.unDate}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-slate-400">所属地域:</span>
+                                    <span class="font-medium text-slate-700">${c.region}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card Bottom -->
+                        <div class="border-t border-slate-100 pt-3 mt-2 flex items-center justify-between text-xs text-slate-500">
+                            <span class="text-slate-400 text-[11px] font-medium">漢字: ${c.kanjiName || 'なし'}</span>
+                            <span class="text-navy-700 font-bold group-hover:translate-x-0.5 transition flex items-center gap-1">
+                                詳細・比較情報 →
+                            </span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // --- 7. ACTIONS & MODALS ---
+        function handleSearch() {
+            const input = document.getElementById('search-input');
+            searchQuery = input.value.trim().toLowerCase();
+            document.getElementById('clear-search').classList.toggle('hidden', searchQuery.length === 0);
+            renderCountries();
+        }
+
+        function clearSearch() {
+            document.getElementById('search-input').value = '';
+            searchQuery = '';
+            document.getElementById('clear-search').classList.add('hidden');
+            renderCountries();
+        }
+
+        function handleSortChange(val) {
+            currentSort = val;
+            renderCountries();
+        }
+
+        function toggleBookmarkFilter() {
+            showBookmarksOnly = !showBookmarksOnly;
+            const btn = document.getElementById('bookmark-filter-btn');
+            if (showBookmarksOnly) {
+                btn.classList.add('bg-amber-500', 'text-navy-950');
+            } else {
+                btn.classList.remove('bg-amber-500', 'text-navy-950');
+            }
+            renderCountries();
+        }
+
+        function toggleBookmark(e, countryId) {
+            e.stopPropagation();
+            if (bookmarkedIds.includes(countryId)) {
+                bookmarkedIds = bookmarkedIds.filter(id => id !== countryId);
+                showToast('ブックマークから削除しました');
+            } else {
+                bookmarkedIds.push(countryId);
+                showToast('ブックマークに追加しました');
+            }
+            localStorage.setItem('official_title_bookmarks_2026', JSON.stringify(bookmarkedIds));
+            updateBookmarkCount();
+            renderCountries();
+
+            if (activeModalCountryId === countryId) {
+                updateModalBookmarkButton(countryId);
+            }
+        }
+
+        function updateBookmarkCount() {
+            document.getElementById('bookmark-count').textContent = bookmarkedIds.length;
+        }
+
+        function openDetailModal(countryId) {
+            activeModalCountryId = countryId;
+            const c = ALL_COUNTRIES_DATABASE.find(item => item.id === countryId);
+            if (!c) return;
+
+            document.getElementById('modal-flag').textContent = c.flag;
+            document.getElementById('modal-official-title').textContent = c.officialName;
+            document.getElementById('modal-common-name').textContent = `通称: ${c.shortName}`;
+            document.getElementById('modal-kanji-name').textContent = c.kanjiName && c.kanjiName !== '-' ? `【漢字: ${c.kanjiName}】` : '';
+            updateModalBookmarkButton(countryId);
+
+            const modalBody = document.getElementById('modal-body');
+            modalBody.innerHTML = `
+                <!-- Attributes Grid -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-slate-100 p-3.5 rounded-xl border border-slate-200 text-xs">
+                    <div>
+                        <span class="text-slate-400 block text-[10px] font-medium">通称名</span>
+                        <span class="font-bold text-navy-900">${c.shortName}</span>
+                    </div>
+                    <div>
+                        <span class="text-slate-400 block text-[10px] font-medium">漢字表記</span>
+                        <span class="font-bold text-navy-900">${c.kanjiName || 'なし'}</span>
+                    </div>
+                    <div>
+                        <span class="text-slate-400 block text-[10px] font-medium">国連加盟年月日</span>
+                        <span class="font-bold text-navy-900">${c.unDate}</span>
+                    </div>
+                    <div>
+                        <span class="text-slate-400 block text-[10px] font-medium">所属地域</span>
+                        <span class="font-bold text-navy-900">${c.region}</span>
+                    </div>
+                </div>
+
+                <!-- Special Status Note if exists -->
+                ${c.notes ? `
+                <div class="bg-red-50 rounded-xl p-3.5 border border-red-200">
+                    <h4 class="text-xs font-bold text-red-900 mb-0.5 flex items-center gap-1">
+                        <svg class="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                        国際法上の地位・特記事項
+                    </h4>
+                    <p class="text-xs text-red-950 font-bold">${c.notes}</p>
+                </div>` : ''}
+
+                <!-- Official Title Origin -->
+                <div class="bg-amber-50 rounded-xl p-4 border border-amber-200">
+                    <h4 class="text-xs font-bold text-amber-900 mb-1 flex items-center gap-1">
+                        <svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        日本の公式正式国名「${c.officialName}」の構造解説
+                    </h4>
+                    <p class="text-xs text-amber-950 leading-relaxed">
+                        日本国外務省公認の公式国号表記です。国名末尾の語尾（例: 〜合衆国、〜王国、〜連邦共和国、〜人民民主共和国、あるいは後置詞なし）により、法的構造や公的な主権形式が示されています。
+                    </p>
+                </div>
+
+                <!-- Governance Detail -->
+                <div class="space-y-3">
+                    <h4 class="text-sm font-bold text-navy-900 border-b border-slate-200 pb-1 flex items-center gap-1.5">
+                        <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 012-2H7a2 2 0 012 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5m0 0h5m0 0v-5a2 2 0 012-2h2a2 2 0 012 2v5"/></svg>
+                        国家構造と政治制度
+                    </h4>
+                    
+                    <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 space-y-2.5 text-xs">
+                        <div>
+                            <span class="font-bold text-navy-900 block mb-0.5">【国家構造（中央集権/連邦）】</span>
+                            <p class="text-slate-700 leading-relaxed">${c.structure}</p>
+                        </div>
+                        <div class="pt-2 border-t border-slate-200">
+                            <span class="font-bold text-navy-900 block mb-0.5">【統治形態・実質的政体】</span>
+                            <p class="text-slate-700 leading-relaxed">${c.governance}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('detail-modal').classList.remove('hidden');
+        }
+
+        function closeDetailModal() {
+            document.getElementById('detail-modal').classList.add('hidden');
+            activeModalCountryId = null;
+        }
+
+        function updateModalBookmarkButton(countryId) {
+            const isBookmarked = bookmarkedIds.includes(countryId);
+            const icon = document.getElementById('modal-bookmark-icon');
+            if (isBookmarked) {
+                icon.setAttribute('fill', 'currentColor');
+                icon.classList.add('text-amber-400');
+            } else {
+                icon.setAttribute('fill', 'none');
+                icon.classList.remove('text-amber-400');
+            }
+        }
+
+        function toggleCurrentModalBookmark() {
+            if (activeModalCountryId) {
+                toggleBookmark(new Event('click'), activeModalCountryId);
+            }
+        }
+
+        // Compare Modal
+        function openCompareModal() {
+            document.getElementById('compare-modal').classList.remove('hidden');
+            renderComparison();
+        }
+
+        function closeCompareModal() {
+            document.getElementById('compare-modal').classList.add('hidden');
+        }
+
+        function populateCompareSelectors() {
+            const sel1 = document.getElementById('compare-select-1');
+            const sel2 = document.getElementById('compare-select-2');
+
+            const options = ALL_COUNTRIES_DATABASE.map(c => `<option value="${c.id}">${c.flag} ${c.officialName} （通称: ${c.shortName}）</option>`).join('');
+            sel1.innerHTML = options;
+            sel2.innerHTML = options;
+
+            // Default picks
+            sel1.value = ALL_COUNTRIES_DATABASE.find(c => c.shortName === '日本')?.id || ALL_COUNTRIES_DATABASE[0].id;
+            sel2.value = ALL_COUNTRIES_DATABASE.find(c => c.shortName === '米国')?.id || ALL_COUNTRIES_DATABASE[1].id;
+        }
+
+        function renderComparison() {
+            const id1 = document.getElementById('compare-select-1').value;
+            const id2 = document.getElementById('compare-select-2').value;
+
+            const c1 = ALL_COUNTRIES_DATABASE.find(c => c.id === id1);
+            const c2 = ALL_COUNTRIES_DATABASE.find(c => c.id === id2);
+
+            const container = document.getElementById('comparison-results');
+            if (!c1 || !c2) return;
+
+            container.innerHTML = `
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
+                        <div class="border-b border-slate-200 pb-2 flex items-center space-x-2">
+                            <span class="text-3xl">${c1.flag}</span>
+                            <div>
+                                <h3 class="text-base font-bold text-navy-900">${c1.officialName}</h3>
+                                <p class="text-xs text-slate-500">通称: ${c1.shortName} | 漢字: ${c1.kanjiName}</p>
+                            </div>
+                        </div>
+                        <div class="text-xs space-y-2">
+                            <div><span class="font-bold text-slate-500">【国家構造】</span> ${c1.structure}</div>
+                            <div><span class="font-bold text-slate-500">【統治形態】</span> ${c1.governance}</div>
+                            <div><span class="font-bold text-slate-500">【加盟年月日】</span> ${c1.unDate}</div>
+                            <div><span class="font-bold text-slate-500">【所属地域】</span> ${c1.region}</div>
+                            ${c1.notes ? `<div class="text-red-600 font-bold"><span class="text-slate-500">【備考】</span> ${c1.notes}</div>` : ''}
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
+                        <div class="border-b border-slate-200 pb-2 flex items-center space-x-2">
+                            <span class="text-3xl">${c2.flag}</span>
+                            <div>
+                                <h3 class="text-base font-bold text-navy-900">${c2.officialName}</h3>
+                                <p class="text-xs text-slate-500">通称: ${c2.shortName} | 漢字: ${c2.kanjiName}</p>
+                            </div>
+                        </div>
+                        <div class="text-xs space-y-2">
+                            <div><span class="font-bold text-slate-500">【国家構造】</span> ${c2.structure}</div>
+                            <div><span class="font-bold text-slate-500">【統治形態】</span> ${c2.governance}</div>
+                            <div><span class="font-bold text-slate-500">【加盟年月日】</span> ${c2.unDate}</div>
+                            <div><span class="font-bold text-slate-500">【所属地域】</span> ${c2.region}</div>
+                            ${c2.notes ? `<div class="text-red-600 font-bold"><span class="text-slate-500">【備考】</span> ${c2.notes}</div>` : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function copyCountryData() {
+            if (!activeModalCountryId) return;
+            const c = ALL_COUNTRIES_DATABASE.find(item => item.id === activeModalCountryId);
+            if (!c) return;
+
+            const text = `日本の正式名称: ${c.officialName}\n通称名: ${c.shortName}\n漢字表記: ${c.kanjiName}\n国連加盟年月日: ${c.unDate}\n地域: ${c.region}\n国家構造: ${c.structure}\n統治形態: ${c.governance}\n備考: ${c.notes || 'なし'}`;
+            
+            const temp = document.createElement('textarea');
+            temp.value = text;
+            document.body.appendChild(temp);
+            temp.select();
+            document.execCommand('copy');
+            document.body.removeChild(temp);
+
+            showToast('解説テキストをコピーしました');
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-message').textContent = msg;
+            toast.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none');
+            }, 2500);
+        }
+
+        function resetApp() {
+            viewMode = 'suffix';
+            currentSubTab = 'all';
+            currentSecondaryTab = 'kyouwakoku_all';
+            searchQuery = '';
+            showBookmarksOnly = false;
+            document.getElementById('search-input').value = '';
+            document.getElementById('clear-search').classList.add('hidden');
+            document.getElementById('bookmark-filter-btn').classList.remove('bg-amber-500', 'text-navy-950');
+            switchViewMode('suffix');
+        }
+    </script>
+</body>
+</html>

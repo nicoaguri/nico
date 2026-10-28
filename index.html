@@ -33,12 +33,17 @@
         }
     </script>
     <style>
+        /* Custom horizontal seekbars/scrollbars */
+        .custom-scrollbar::-webkit-scrollbar { height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #0f172a; border-radius: 3px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #fbbf24; }
+        .custom-scrollbar { scrollbar-width: thin; scrollbar-color: #334155 #0f172a; }
+
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: #f1f5f9; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
         ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col selection:bg-amber-500 selection:text-white">
@@ -105,11 +110,11 @@
         </div>
     </section>
 
-    <!-- Sub-Nav Tabs Container -->
-    <nav class="bg-navy-900 text-slate-200 sticky top-[57px] sm:top-[65px] z-20 shadow-md border-t border-navy-800">
+    <!-- Navigation Tabs Container -->
+    <nav class="bg-navy-950 text-slate-200 sticky top-[57px] sm:top-[65px] z-20 shadow-md border-t border-navy-800 py-2">
         <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
-            <div id="tab-container" class="flex overflow-x-auto no-scrollbar space-x-1 py-2 text-xs font-medium">
-                <!-- Dynamically rendered sub-tabs with badge count -->
+            <div id="tab-container">
+                <!-- Dynamically rendered tab navigation -->
             </div>
         </div>
     </nav>
@@ -164,7 +169,6 @@
     <!-- Detail Modal -->
     <div id="detail-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-3 sm:p-6 hidden overflow-y-auto">
         <div class="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden my-auto">
-            <!-- Modal Header -->
             <div class="bg-navy-950 text-white px-6 py-4 flex items-center justify-between border-b border-navy-800 sticky top-0 z-10">
                 <div class="flex items-center space-x-3">
                     <span id="modal-flag" class="text-3xl sm:text-4xl"></span>
@@ -186,12 +190,9 @@
                 </div>
             </div>
 
-            <!-- Modal Body -->
             <div id="modal-body" class="p-6 overflow-y-auto space-y-5 text-sm text-slate-700">
-                <!-- JS dynamic insert -->
             </div>
 
-            <!-- Modal Footer -->
             <div class="bg-slate-50 border-t border-slate-200 px-6 py-3 flex justify-between items-center text-xs text-slate-500">
                 <span>外務省公認国名・国際法学術データ</span>
                 <button onclick="copyCountryData()" class="px-3 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-lg font-medium transition flex items-center gap-1">
@@ -219,7 +220,6 @@
             </div>
 
             <div class="p-6 overflow-y-auto space-y-6">
-                <!-- Selectors -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-slate-100 p-4 rounded-xl border border-slate-200">
                     <div>
                         <label class="block text-xs font-bold text-navy-900 mb-1">比較する国 A</label>
@@ -233,7 +233,6 @@
                     </div>
                 </div>
 
-                <!-- Compare Matrix -->
                 <div id="comparison-results" class="space-y-4">
                 </div>
             </div>
@@ -249,18 +248,32 @@
     <!-- Application Script & Raw Dataset -->
     <script>
         // --- 1. MODE TABS DEFINITIONS ---
-        
-        // Mode 1: Suffix Categories based exclusively on Japanese Official Formal Title Endings
         const SUFFIX_TABS = [
             { id: 'all', label: 'すべて' },
             { id: 'koku_pure', label: '〜国' },
             { id: 'dokuritsukoku', label: '〜独立国' },
             { id: 'goushuukoku', label: '〜合衆国' },
             { id: 'rengou', label: '〜連合' },
-            { id: 'renpou', label: '〜連邦' },
-            { id: 'renpou_kyouwakoku', label: '〜連邦共和国' },
-            { id: 'renpou_minshu_kyouwakoku', label: '〜連邦民主共和国' },
-            // 「公国」系（2階層目の親タブ）
+            {
+                id: 'renpou_group',
+                label: '連邦（〜連邦系）',
+                hasSubTabs: true,
+                subTabs: [
+                    { id: 'renpou_all', label: 'すべての連邦' },
+                    { id: 'renpou_pure', label: '〜連邦' },
+                    { id: 'shuchou_renpou', label: '〜首長国連邦' }
+                ]
+            },
+            {
+                id: 'renpou_kyouwakoku_group',
+                label: '連邦共和国（〜連邦共和国系）',
+                hasSubTabs: true,
+                subTabs: [
+                    { id: 'renpou_kyouwakoku_all', label: 'すべての連邦共和国' },
+                    { id: 'renpou_kyouwakoku_pure', label: '〜連邦共和国' },
+                    { id: 'renpou_minshu_kyouwakoku', label: '〜連邦民主共和国' }
+                ]
+            },
             {
                 id: 'kougoku_group',
                 label: '公国（〜公国系）',
@@ -271,7 +284,6 @@
                     { id: 'taikougoku', label: '〜大公国' }
                 ]
             },
-            // 「王国」系（2階層目の親タブ）
             {
                 id: 'ougoku_group',
                 label: '王国（〜王国系）',
@@ -282,7 +294,6 @@
                     { id: 'rengou_ougoku', label: '〜連合王国' }
                 ]
             },
-            // 「共和国」系（2階層目の親タブ）
             { 
                 id: 'kyouwakoku_group', 
                 label: '共和国（〜共和国系）',
@@ -304,7 +315,6 @@
             { id: 'none', label: '名前に後置詞なし（国名のみ）' }
         ];
 
-        // Mode 2: Region Tabs
         const REGION_TABS = [
             { id: 'all', label: '全地域' },
             { id: 'アジア', label: 'アジア' },
@@ -316,7 +326,6 @@
             { id: 'オセアニア', label: 'オセアニア' }
         ];
 
-        // Mode 3: State Structure Tabs
         const STRUCTURE_TABS = [
             { id: 'all', label: '全制度' },
             { id: '単一国家', label: '単一国家' },
@@ -329,7 +338,7 @@
             { id: '一党制', label: '一党制・その他' }
         ];
 
-        // --- 2. COMPLETE DATASET (USER-PROVIDED 196 ENTRIES) ---
+        // --- 2. COMPLETE DATASET (ALL 196 ENTRIES) ---
         const RAW_USER_DATA = [
             ["インド", "印度", "インド", "アジア", "1945/10/30", "", "連邦制", "議院内閣制", "🇮🇳"],
             ["インドネシア", "印度尼西亜", "インドネシア共和国", "アジア", "1950/9/28", "", "単一国家", "大統領制", "🇮🇩"],
@@ -373,7 +382,7 @@
             ["コンゴ民主共和国", "-", "コンゴ民主共和国", "アフリカ", "1960/9/20", "", "単一国家", "半大統領制", "🇨🇩"],
             ["コンゴ共和国", "剛果共和国", "コンゴ共和国", "アフリカ", "1960/9/20", "", "単一国家", "大統領制", "🇨🇬"],
             ["サントメ・プリンシペ", "-", "サントメ・プリンシペ民主共和国", "アフリカ", "1975/9/16", "", "単一国家", "半大統領制", "🇸🇹"],
-            ["ザンビア", "賛比亜", "ザンビア共和国", "アフリカ", "1964/12/1", "", "単一国家", "大統領制", "🇿🇲"],
+            ["ザンビア", "賛比亜", "ザンビア共和国", "アフリカ", "1964/12/1", "", "単一国家", "大統領制", "🇿Multip爾"],
             ["シエラレオネ", "獅子山", "シエラレオネ共和国", "アフリカ", "1961/9/27", "", "単一国家", "大統領制", "🇸🇱"],
             ["ジブチ", "吉布提", "ジブティ共和国", "アフリカ", "1977/9/20", "", "単一国家", "半大統領制", "🇩🇯"],
             ["ジンバブエ", "津巴布韋", "ジンバブエ共和国", "アフリカ", "1980/8/25", "", "単一国家", "大統領制", "🇿🇼"],
@@ -416,7 +425,7 @@
             ["ナウル", "瑙魯", "ナウル共和国", "オセアニア", "1999/9/14", "", "単一国家", "議院内閣制", "🇳🇷"],
             ["ニュージーランド", "新西蘭", "ニュー・ジーランド", "オセアニア", "1945/10/24", "", "単一国家", "議院内閣制", "🇳🇿"],
             ["バヌアツ", "瓦努阿圖", "バヌアツ共和国", "オセアニア", "1981/9/15", "", "単一国家", "議院内閣制", "🇻🇺"],
-            ["パプアニューギニア", "巴布亜新幾内亜", "パプアニューギニア", "オセアニア", "1975/10/10", "", "単一国家", "議院内閣制", "🇵🇬"],
+            ["パプアニューギニア", "巴布亜新幾内亜", "パプアニューギニア独立国", "オセアニア", "1975/10/10", "", "単一国家", "議院内閣制", "🇵🇬"],
             ["パラオ", "帛琉", "パラオ共和国", "オセアニア", "1994/12/15", "", "単一国家", "大統領制", "🇵🇼"],
             ["フィジー", "斐濟", "フィジー共和国", "オセアニア", "1970/10/13", "", "単一国家", "議院内閣制", "🇫🇯"],
             ["マーシャル諸島", "馬紹爾諸島", "マーシャル諸島共和国", "オセアニア", "1991/9/17", "", "単一国家", "大統領制", "🇲🇭"],
@@ -479,7 +488,7 @@
             ["イスラエル", "以色列", "イスラエル国", "中東", "1949/5/11", "", "単一国家", "議院内閣制", "🇮🇱"],
             ["イラク", "伊拉克", "イラク共和国", "中東", "1945/12/21", "", "連邦制", "議院内閣制", "🇮🇶"],
             ["イラン", "伊朗", "イラン・イスラム共和国", "中東", "1945/10/24", "", "単一国家", "神権共和制", "🇮🇷"],
-            ["オマーン", "阿曼", "オマーン国", "中東", "1971/10/7", "", "単一国家", "絶対君主制", "🇴🇲"],
+            ["オマーン", "阿曼", "オマーン国", "中東", "1971/10/7", "", "単一国家", "絶対君主制", "🇴曼"],
             ["カタール", "喀塔爾", "カタール国", "中東", "1971/9/21", "", "単一国家", "絶対君主制", "🇶🇦"],
             ["クウェート", "科威特", "クウェート国", "中東", "1963/5/14", "", "単一国家", "立憲首長制", "🇰🇼"],
             ["サウジアラビア", "沙特阿拉伯", "サウジアラビア王国", "中東", "1945/10/24", "", "単一国家", "絶対君主制", "🇸🇦"],
@@ -519,7 +528,7 @@
             ["ベリーズ", "伯利茲", "ベリーズ", "北アメリカ", "1981/9/25", "", "単一国家", "議院内閣制", "🇧🇿"],
             ["ペルー", "秘露", "ペルー共和国", "南アメリカ", "1945/10/31", "", "単一国家", "大統領制", "🇵🇪"],
             ["ボリビア", "玻利維亜", "ボリビア多民族国", "南アメリカ", "1945/11/14", "", "単一国家", "大統領制", "🇧🇴"],
-            ["ホンジュラス", "洪都拉斯", "ホンジュラス共和国", "北アメリカ", "1945/12/17", "", "単一国家", "大統領制", "🇭🇳"],
+            ["ホンジュラス", "洪都ラス", "ホンジュラス共和国", "北アメリカ", "1945/12/17", "", "単一国家", "大統領制", "🇭🇳"],
             ["メキシコ", "墨西哥", "メキシコ合衆国", "北アメリカ", "1945/11/7", "", "連邦制", "大統領制", "🇲🇽"],
             ["カナダ", "加奈陀", "カナダ", "北アメリカ", "1945/11/9", "", "連邦制", "議院内閣制", "🇨🇦"],
             ["米国", "米国", "アメリカ合衆国", "北アメリカ", "1945/10/24", "国連常任理事国", "連邦制", "大統領制", "🇺🇸"],
@@ -535,16 +544,15 @@
             ["マカオ", "澳門", "マカオ特別行政区", "アジア", "中国特別行政区", "一国二制度", "特別行政区", "行政長官制", "🇲🇴"]
         ];
 
-        // --- HELPER FUNCTION: Categorize strictly by Official Title Suffix Pattern ---
         function classifySuffixCategory(officialName) {
             const name = officialName.trim();
             if (name.endsWith('独立国')) return 'dokuritsukoku';
             if (name.endsWith('合衆国')) return 'goushuukoku';
             if (name.endsWith('連合王国') || name.includes('連合王国')) return 'rengou_ougoku';
-            if (name.endsWith('連合共和国')) return 'rengou_kyouwakoku';
+            if (name.endsWith('首長国連邦')) return 'shuchou_renpou';
             if (name.endsWith('連邦民主共和国')) return 'renpou_minshu_kyouwakoku';
-            if (name.endsWith('連邦共和国')) return 'renpou_kyouwakoku';
-            if (name.endsWith('連邦')) return 'renpou';
+            if (name.endsWith('連邦共和国')) return 'renpou_kyouwakoku_pure';
+            if (name.endsWith('連邦')) return 'renpou_pure';
             if (name.endsWith('連合')) return 'rengou';
             if (name.endsWith('大公国')) return 'taikougoku';
             if (name.endsWith('公国')) return 'kougoku_pure';
@@ -560,10 +568,9 @@
             if (name.includes('民主共和国')) return 'minshu_kyouwakoku';
             if (name.endsWith('共和国') || name.endsWith('共和国）')) return 'kyouwakoku_pure';
             if (name.endsWith('国')) return 'koku_pure';
-            return 'none'; // 名前に後置詞なし（国名のみ）
+            return 'none';
         }
 
-        // Format raw database array into object collection
         const ALL_COUNTRIES_DATABASE = RAW_USER_DATA.map((item, idx) => {
             const shortName = item[0];
             const kanjiName = item[1];
@@ -594,9 +601,9 @@
         });
 
         // --- 3. APPLICATION STATE ---
-        let viewMode = 'suffix'; // 'suffix' | 'region' | 'structure'
+        let viewMode = 'suffix'; 
         let currentSubTab = 'all';
-        let currentSecondaryTab = 'kyouwakoku_all'; // 2階層目用ステート
+        let currentSecondaryTab = 'kyouwakoku_all';
         let searchQuery = '';
         let currentSort = 'official';
         let showBookmarksOnly = false;
@@ -611,13 +618,11 @@
             populateCompareSelectors();
         };
 
-        // --- 5. VIEW MODE SWITCHER & TAB RENDER ---
         function switchViewMode(mode) {
             viewMode = mode;
             currentSubTab = 'all';
             currentSecondaryTab = (mode === 'suffix') ? 'kyouwakoku_all' : '';
             
-            // Update active state of mode buttons
             ['suffix', 'region', 'structure'].forEach(m => {
                 const btn = document.getElementById(`mode-btn-${m}`);
                 if (m === mode) {
@@ -638,63 +643,52 @@
             return SUFFIX_TABS;
         }
 
-        // 公国グループ判定（〜公国、〜大公国）
+        function isFederationGroup(c) {
+            return ['renpou_pure', 'shuchou_renpou'].includes(c.tabCategory);
+        }
+
+        function isFederalRepublicGroup(c) {
+            return ['renpou_kyouwakoku_pure', 'renpou_minshu_kyouwakoku'].includes(c.tabCategory);
+        }
+
         function isPrincipalityGroup(c) {
-            const cat = c.tabCategory;
-            return ['kougoku_pure', 'taikougoku'].includes(cat);
+            return ['kougoku_pure', 'taikougoku'].includes(c.tabCategory);
         }
 
-        // 王国グループ判定（〜王国、〜連合王国）
         function isKingdomGroup(c) {
-            const cat = c.tabCategory;
-            return ['ougoku_pure', 'rengou_ougoku'].includes(cat);
+            return ['ougoku_pure', 'rengou_ougoku'].includes(c.tabCategory);
         }
 
-        // 共和国グループ判定（連邦を除くすべての共和国系）
         function isRepublicGroup(c) {
-            const cat = c.tabCategory;
             return [
                 'kyouwakoku_pure', 'islam_kyouwakoku', 'bolivar_kyouwakoku', 
                 'touhou_kyouwakoku', 'kyoudou_kyouwakoku', 'jinmin_kyouwakoku', 
                 'minshu_kyouwakoku', 'shakaishugi_kyouwakoku'
-            ].includes(cat);
+            ].includes(c.tabCategory);
         }
 
         function getTabCount(tabId, subId = null) {
             if (tabId === 'all') return ALL_COUNTRIES_DATABASE.length;
 
             if (viewMode === 'suffix') {
+                if (tabId === 'renpou_group') {
+                    if (!subId || subId === 'renpou_all') return ALL_COUNTRIES_DATABASE.filter(isFederationGroup).length;
+                    return ALL_COUNTRIES_DATABASE.filter(c => c.tabCategory === subId).length;
+                }
+                if (tabId === 'renpou_kyouwakoku_group') {
+                    if (!subId || subId === 'renpou_kyouwakoku_all') return ALL_COUNTRIES_DATABASE.filter(isFederalRepublicGroup).length;
+                    return ALL_COUNTRIES_DATABASE.filter(c => c.tabCategory === subId).length;
+                }
                 if (tabId === 'kougoku_group') {
-                    if (!subId || subId === 'kougoku_all') {
-                        return ALL_COUNTRIES_DATABASE.filter(isPrincipalityGroup).length;
-                    }
-                    if (subId === 'kougoku_pure') {
-                        return ALL_COUNTRIES_DATABASE.filter(c => c.tabCategory === 'kougoku_pure').length;
-                    }
-                    if (subId === 'taikougoku') {
-                        return ALL_COUNTRIES_DATABASE.filter(c => c.tabCategory === 'taikougoku').length;
-                    }
+                    if (!subId || subId === 'kougoku_all') return ALL_COUNTRIES_DATABASE.filter(isPrincipalityGroup).length;
                     return ALL_COUNTRIES_DATABASE.filter(c => c.tabCategory === subId).length;
                 }
                 if (tabId === 'ougoku_group') {
-                    if (!subId || subId === 'ougoku_all') {
-                        return ALL_COUNTRIES_DATABASE.filter(isKingdomGroup).length;
-                    }
-                    if (subId === 'ougoku_pure') {
-                        return ALL_COUNTRIES_DATABASE.filter(c => c.tabCategory === 'ougoku_pure').length;
-                    }
-                    if (subId === 'rengou_ougoku') {
-                        return ALL_COUNTRIES_DATABASE.filter(c => c.tabCategory === 'rengou_ougoku').length;
-                    }
+                    if (!subId || subId === 'ougoku_all') return ALL_COUNTRIES_DATABASE.filter(isKingdomGroup).length;
                     return ALL_COUNTRIES_DATABASE.filter(c => c.tabCategory === subId).length;
                 }
                 if (tabId === 'kyouwakoku_group') {
-                    if (!subId || subId === 'kyouwakoku_all') {
-                        return ALL_COUNTRIES_DATABASE.filter(isRepublicGroup).length;
-                    }
-                    if (subId === 'kyouwakoku_pure') {
-                        return ALL_COUNTRIES_DATABASE.filter(c => c.tabCategory === 'kyouwakoku_pure').length;
-                    }
+                    if (!subId || subId === 'kyouwakoku_all') return ALL_COUNTRIES_DATABASE.filter(isRepublicGroup).length;
                     return ALL_COUNTRIES_DATABASE.filter(c => c.tabCategory === subId).length;
                 }
                 return ALL_COUNTRIES_DATABASE.filter(c => c.tabCategory === tabId).length;
@@ -706,40 +700,66 @@
             return 0;
         }
 
+        function scrollTabContainer(containerId, direction) {
+            const el = document.getElementById(containerId);
+            if (!el) return;
+            const scrollAmount = direction === 'left' ? -220 : 220;
+            el.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        }
+
+        // --- RENDER TABS AND PRESERVE SCROLL POSITION ---
         function renderSubNavTabs() {
             const container = document.getElementById('tab-container');
             const tabList = getActiveTabList();
 
             let html = '<div class="flex flex-col w-full space-y-2">';
 
-            // 1階層目（メインサブタブ）
-            html += '<div class="flex overflow-x-auto no-scrollbar space-x-1 py-1 text-xs font-medium">';
+            html += `
+                <div class="relative flex items-center group">
+                    <button onclick="scrollTabContainer('nav-tab-scroll-1', 'left')" class="hidden sm:flex z-10 bg-navy-900/90 text-amber-400 p-1.5 rounded-l-lg hover:bg-navy-800 transition border-r border-navy-800 items-center justify-center font-bold text-sm shadow">
+                        ‹
+                    </button>
+                    <div id="nav-tab-scroll-1" class="flex overflow-x-auto custom-scrollbar space-x-1 py-1.5 text-xs font-medium w-full scroll-smooth">
+            `;
+
             html += tabList.map(tab => {
                 const count = getTabCount(tab.id);
                 const isActive = currentSubTab === tab.id;
                 const activeStyle = isActive 
                     ? 'bg-amber-500 text-navy-950 font-bold shadow-md' 
-                    : 'bg-navy-950 text-slate-300 hover:bg-navy-800 hover:text-white border border-navy-800';
+                    : 'bg-navy-900 text-slate-300 hover:bg-navy-800 hover:text-white border border-navy-800';
                 
                 return `
-                    <button onclick="selectSubTab('${tab.id}')" class="px-3 py-1.5 rounded-xl transition whitespace-nowrap flex items-center gap-1.5 ${activeStyle}">
+                    <button id="tab-btn-${tab.id}" onclick="selectSubTab('${tab.id}', event)" class="tab-btn-item px-3 py-1.5 rounded-xl transition whitespace-nowrap flex items-center gap-1.5 ${activeStyle}">
                         <span>${tab.label}</span>
                         <span class="text-[10px] px-1.5 py-0.2 rounded-full ${isActive ? 'bg-navy-950 text-amber-400' : 'bg-navy-800 text-slate-400'} font-bold">${count}</span>
                     </button>
                 `;
             }).join('');
-            html += '</div>';
 
-            // 2階層目（「公国グループ」「王国グループ」「共和国グループ」が選択された場合のみ表示）
-            if (viewMode === 'suffix' && (currentSubTab === 'kougoku_group' || currentSubTab === 'ougoku_group' || currentSubTab === 'kyouwakoku_group')) {
+            html += `
+                    </div>
+                    <button onclick="scrollTabContainer('nav-tab-scroll-1', 'right')" class="hidden sm:flex z-10 bg-navy-900/90 text-amber-400 p-1.5 rounded-r-lg hover:bg-navy-800 transition border-l border-navy-800 items-center justify-center font-bold text-sm shadow">
+                        ›
+                    </button>
+                </div>
+            `;
+
+            const parentGroups = ['renpou_group', 'renpou_kyouwakoku_group', 'kougoku_group', 'ougoku_group', 'kyouwakoku_group'];
+            if (viewMode === 'suffix' && parentGroups.includes(currentSubTab)) {
                 const groupObj = SUFFIX_TABS.find(t => t.id === currentSubTab);
-                let groupLabel = '└ 共和国内分類:';
-                if (currentSubTab === 'kougoku_group') groupLabel = '└ 公国内分類:';
-                if (currentSubTab === 'ougoku_group') groupLabel = '└ 王国内分類:';
+                let groupLabel = '└ 派生名辞分類:';
 
                 if (groupObj && groupObj.subTabs) {
-                    html += '<div class="flex overflow-x-auto no-scrollbar space-x-1 py-1.5 border-t border-navy-800/80 bg-navy-950/60 rounded-xl px-2 text-xs">';
-                    html += `<span class="text-amber-400 font-bold self-center pr-2 text-[11px] whitespace-nowrap">${groupLabel}</span>`;
+                    html += `
+                        <div class="relative flex items-center bg-navy-950/80 rounded-xl px-2 border border-navy-800">
+                            <span class="text-amber-400 font-bold pr-2 text-[11px] whitespace-nowrap self-center">${groupLabel}</span>
+                            <button onclick="scrollTabContainer('nav-tab-scroll-2', 'left')" class="hidden sm:flex z-10 bg-navy-900 text-amber-400 p-1 rounded hover:bg-navy-800 transition border-r border-navy-800 items-center justify-center font-bold text-xs shadow">
+                                ‹
+                            </button>
+                            <div id="nav-tab-scroll-2" class="flex overflow-x-auto custom-scrollbar space-x-1 py-1.5 text-xs w-full scroll-smooth">
+                    `;
+
                     html += groupObj.subTabs.map(sub => {
                         const count = getTabCount(currentSubTab, sub.id);
                         const isSubActive = currentSecondaryTab === sub.id;
@@ -748,13 +768,20 @@
                             : 'bg-navy-800 text-slate-300 hover:bg-navy-700 hover:text-white border border-navy-700';
 
                         return `
-                            <button onclick="selectSecondaryTab('${sub.id}')" class="px-2.5 py-1 rounded-lg transition whitespace-nowrap flex items-center gap-1 text-[11px] ${subStyle}">
+                            <button id="subtab-btn-${sub.id}" onclick="selectSecondaryTab('${sub.id}', event)" class="subtab-btn-item px-2.5 py-1 rounded-lg transition whitespace-nowrap flex items-center gap-1 text-[11px] ${subStyle}">
                                 <span>${sub.label}</span>
                                 <span class="text-[9px] opacity-80 font-bold">(${count})</span>
                             </button>
                         `;
                     }).join('');
-                    html += '</div>';
+
+                    html += `
+                            </div>
+                            <button onclick="scrollTabContainer('nav-tab-scroll-2', 'right')" class="hidden sm:flex z-10 bg-navy-900 text-amber-400 p-1 rounded hover:bg-navy-800 transition border-l border-navy-800 items-center justify-center font-bold text-xs shadow">
+                                ›
+                            </button>
+                        </div>
+                    `;
                 }
             }
 
@@ -762,24 +789,67 @@
             container.innerHTML = html;
         }
 
-        function selectSubTab(tabId) {
-            currentSubTab = tabId;
-            if (tabId === 'kougoku_group') {
-                currentSecondaryTab = 'kougoku_all';
-            } else if (tabId === 'ougoku_group') {
-                currentSecondaryTab = 'ougoku_all';
-            } else if (tabId === 'kyouwakoku_group') {
-                currentSecondaryTab = 'kyouwakoku_all';
+        // NO DOM DESTRUCTION ON SUB-TAB TOGGLE - PRESERVES SCROLL & CENTERING
+        function updateTabStylesOnly(activeTabId, activeSubTabId) {
+            const tabButtons = document.querySelectorAll('.tab-btn-item');
+            tabButtons.forEach(btn => {
+                const isThisActive = btn.id === `tab-btn-${activeTabId}`;
+                if (isThisActive) {
+                    btn.className = 'tab-btn-item px-3 py-1.5 rounded-xl transition whitespace-nowrap flex items-center gap-1.5 bg-amber-500 text-navy-950 font-bold shadow-md';
+                } else {
+                    btn.className = 'tab-btn-item px-3 py-1.5 rounded-xl transition whitespace-nowrap flex items-center gap-1.5 bg-navy-900 text-slate-300 hover:bg-navy-800 hover:text-white border border-navy-800';
+                }
+            });
+
+            if (activeSubTabId) {
+                const subButtons = document.querySelectorAll('.subtab-btn-item');
+                subButtons.forEach(btn => {
+                    const isThisSubActive = btn.id === `subtab-btn-${activeSubTabId}`;
+                    if (isThisSubActive) {
+                        btn.className = 'subtab-btn-item px-2.5 py-1 rounded-lg transition whitespace-nowrap flex items-center gap-1 text-[11px] bg-amber-400 text-navy-950 font-bold shadow';
+                    } else {
+                        btn.className = 'subtab-btn-item px-2.5 py-1 rounded-lg transition whitespace-nowrap flex items-center gap-1 text-[11px] bg-navy-800 text-slate-300 hover:bg-navy-700 hover:text-white border border-navy-700';
+                    }
+                });
             }
+        }
+
+        function selectSubTab(tabId, event) {
+            const parentGroups = ['renpou_group', 'renpou_kyouwakoku_group', 'kougoku_group', 'ougoku_group', 'kyouwakoku_group'];
+            const needsParentStructureChange = parentGroups.includes(currentSubTab) !== parentGroups.includes(tabId);
+
+            currentSubTab = tabId;
+            if (tabId === 'renpou_group') currentSecondaryTab = 'renpou_all';
+            else if (tabId === 'renpou_kyouwakoku_group') currentSecondaryTab = 'renpou_kyouwakoku_all';
+            else if (tabId === 'kougoku_group') currentSecondaryTab = 'kougoku_all';
+            else if (tabId === 'ougoku_group') currentSecondaryTab = 'ougoku_all';
+            else if (tabId === 'kyouwakoku_group') currentSecondaryTab = 'kyouwakoku_all';
+            else currentSecondaryTab = '';
+
             showBookmarksOnly = false;
             document.getElementById('bookmark-filter-btn').classList.remove('bg-amber-500', 'text-navy-950');
-            renderSubNavTabs();
+
+            if (needsParentStructureChange) {
+                renderSubNavTabs();
+            } else {
+                updateTabStylesOnly(tabId, currentSecondaryTab);
+            }
+
+            if (event && event.currentTarget) {
+                event.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            }
+
             renderCountries();
         }
 
-        function selectSecondaryTab(subId) {
+        function selectSecondaryTab(subId, event) {
             currentSecondaryTab = subId;
-            renderSubNavTabs();
+            updateTabStylesOnly(currentSubTab, subId);
+
+            if (event && event.currentTarget) {
+                event.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            }
+
             renderCountries();
         }
 
@@ -792,35 +862,23 @@
 
             let filtered = ALL_COUNTRIES_DATABASE;
 
-            // 1. Mode Sub-Tab Filtering
             if (currentSubTab !== 'all') {
                 if (viewMode === 'suffix') {
-                    if (currentSubTab === 'kougoku_group') {
-                        if (currentSecondaryTab === 'kougoku_all') {
-                            filtered = filtered.filter(isPrincipalityGroup);
-                        } else if (currentSecondaryTab === 'kougoku_pure') {
-                            filtered = filtered.filter(c => c.tabCategory === 'kougoku_pure');
-                        } else if (currentSecondaryTab === 'taikougoku') {
-                            filtered = filtered.filter(c => c.tabCategory === 'taikougoku');
-                        } else {
-                            filtered = filtered.filter(c => c.tabCategory === currentSecondaryTab);
-                        }
+                    if (currentSubTab === 'renpou_group') {
+                        if (currentSecondaryTab === 'renpou_all') filtered = filtered.filter(isFederationGroup);
+                        else filtered = filtered.filter(c => c.tabCategory === currentSecondaryTab);
+                    } else if (currentSubTab === 'renpou_kyouwakoku_group') {
+                        if (currentSecondaryTab === 'renpou_kyouwakoku_all') filtered = filtered.filter(isFederalRepublicGroup);
+                        else filtered = filtered.filter(c => c.tabCategory === currentSecondaryTab);
+                    } else if (currentSubTab === 'kougoku_group') {
+                        if (currentSecondaryTab === 'kougoku_all') filtered = filtered.filter(isPrincipalityGroup);
+                        else filtered = filtered.filter(c => c.tabCategory === currentSecondaryTab);
                     } else if (currentSubTab === 'ougoku_group') {
-                        if (currentSecondaryTab === 'ougoku_all') {
-                            filtered = filtered.filter(isKingdomGroup);
-                        } else if (currentSecondaryTab === 'ougoku_pure') {
-                            filtered = filtered.filter(c => c.tabCategory === 'ougoku_pure');
-                        } else {
-                            filtered = filtered.filter(c => c.tabCategory === currentSecondaryTab);
-                        }
+                        if (currentSecondaryTab === 'ougoku_all') filtered = filtered.filter(isKingdomGroup);
+                        else filtered = filtered.filter(c => c.tabCategory === currentSecondaryTab);
                     } else if (currentSubTab === 'kyouwakoku_group') {
-                        if (currentSecondaryTab === 'kyouwakoku_all') {
-                            filtered = filtered.filter(isRepublicGroup);
-                        } else if (currentSecondaryTab === 'kyouwakoku_pure') {
-                            filtered = filtered.filter(c => c.tabCategory === 'kyouwakoku_pure');
-                        } else {
-                            filtered = filtered.filter(c => c.tabCategory === currentSecondaryTab);
-                        }
+                        if (currentSecondaryTab === 'kyouwakoku_all') filtered = filtered.filter(isRepublicGroup);
+                        else filtered = filtered.filter(c => c.tabCategory === currentSecondaryTab);
                     } else {
                         filtered = filtered.filter(c => c.tabCategory === currentSubTab);
                     }
@@ -831,7 +889,6 @@
                 }
             }
 
-            // 2. Search Query Filtering
             if (searchQuery) {
                 filtered = filtered.filter(c => {
                     const oMatch = c.officialName.toLowerCase().includes(searchQuery);
@@ -844,12 +901,10 @@
                 });
             }
 
-            // 3. Bookmarks Filtering
             if (showBookmarksOnly) {
                 filtered = filtered.filter(c => bookmarkedIds.includes(c.id));
             }
 
-            // 4. Sorting
             if (currentSort === 'official') {
                 filtered.sort((a, b) => a.officialName.localeCompare(b.officialName, 'ja'));
             } else if (currentSort === 'common') {
@@ -860,7 +915,6 @@
                 filtered.sort((a, b) => a.region.localeCompare(b.region, 'ja'));
             }
 
-            // Set Header Titles
             if (showBookmarksOnly) {
                 titleEl.textContent = 'ブックマーク保存済みの国・地域';
             } else if (searchQuery) {
@@ -868,12 +922,9 @@
             } else {
                 const tabList = getActiveTabList();
                 const activeTabObj = tabList.find(t => t.id === currentSubTab);
-                if ((currentSubTab === 'kougoku_group' || currentSubTab === 'ougoku_group' || currentSubTab === 'kyouwakoku_group') && activeTabObj && activeTabObj.subTabs) {
+                if (activeTabObj && activeTabObj.subTabs) {
                     const subObj = activeTabObj.subTabs.find(s => s.id === currentSecondaryTab);
-                    let prefix = '共和国';
-                    if (currentSubTab === 'kougoku_group') prefix = '公国';
-                    if (currentSubTab === 'ougoku_group') prefix = '王国';
-                    titleEl.textContent = subObj ? `${prefix} > ${subObj.label}` : `${prefix}系 一覧`;
+                    titleEl.textContent = subObj ? `${activeTabObj.label} > ${subObj.label}` : `${activeTabObj.label} 一覧`;
                 } else {
                     titleEl.textContent = activeTabObj ? `${activeTabObj.label} 一覧` : 'すべての国・地域';
                 }
@@ -888,7 +939,6 @@
                 emptyState.classList.add('hidden');
             }
 
-            // Render Cards Grid
             grid.innerHTML = filtered.map(c => {
                 const isBookmarked = bookmarkedIds.includes(c.id);
                 const bookmarkClass = isBookmarked ? 'text-amber-500 fill-amber-500' : 'text-slate-300 hover:text-amber-500';
@@ -896,7 +946,6 @@
                 return `
                     <div onclick="openDetailModal('${c.id}')" class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:shadow-md hover:border-navy-700 transition cursor-pointer flex flex-col justify-between group relative">
                         <div>
-                            <!-- Header with Formal Official Title -->
                             <div class="flex items-start justify-between gap-2 mb-2">
                                 <div class="flex items-center space-x-3">
                                     <span class="text-3xl sm:text-4xl">${c.flag}</span>
@@ -915,7 +964,6 @@
                                 </button>
                             </div>
 
-                            <!-- Attributes Badges -->
                             <div class="flex flex-wrap gap-1.5 my-2.5">
                                 <span class="bg-navy-50 text-navy-800 font-bold text-[11px] px-2.5 py-0.5 rounded-md border border-navy-100">
                                     ${c.structure}
@@ -926,7 +974,6 @@
                                 ${c.notes ? `<span class="bg-red-50 text-red-700 font-bold text-[10px] px-2 py-0.5 rounded-md border border-red-200">${c.notes}</span>` : ''}
                             </div>
 
-                            <!-- Key Fact Line -->
                             <div class="text-xs text-slate-600 space-y-1 mb-3 bg-slate-50 p-2.5 rounded-xl border border-slate-100">
                                 <div class="flex justify-between">
                                     <span class="text-slate-400">国連加盟年月日:</span>
@@ -939,7 +986,6 @@
                             </div>
                         </div>
 
-                        <!-- Card Bottom -->
                         <div class="border-t border-slate-100 pt-3 mt-2 flex items-center justify-between text-xs text-slate-500">
                             <span class="text-slate-400 text-[11px] font-medium">漢字: ${c.kanjiName || 'なし'}</span>
                             <span class="text-navy-700 font-bold group-hover:translate-x-0.5 transition flex items-center gap-1">
@@ -1017,7 +1063,6 @@
 
             const modalBody = document.getElementById('modal-body');
             modalBody.innerHTML = `
-                <!-- Attributes Grid -->
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-slate-100 p-3.5 rounded-xl border border-slate-200 text-xs">
                     <div>
                         <span class="text-slate-400 block text-[10px] font-medium">通称名</span>
@@ -1037,7 +1082,6 @@
                     </div>
                 </div>
 
-                <!-- Special Status Note if exists -->
                 ${c.notes ? `
                 <div class="bg-red-50 rounded-xl p-3.5 border border-red-200">
                     <h4 class="text-xs font-bold text-red-900 mb-0.5 flex items-center gap-1">
@@ -1047,18 +1091,16 @@
                     <p class="text-xs text-red-950 font-bold">${c.notes}</p>
                 </div>` : ''}
 
-                <!-- Official Title Origin -->
                 <div class="bg-amber-50 rounded-xl p-4 border border-amber-200">
                     <h4 class="text-xs font-bold text-amber-900 mb-1 flex items-center gap-1">
                         <svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                         日本の公式正式国名「${c.officialName}」の構造解説
                     </h4>
                     <p class="text-xs text-amber-950 leading-relaxed">
-                        日本国外務省公認の公式国号表記です。国名末尾の語尾（例: 〜合衆国、〜王国、〜連邦共和国、〜人民民主共和国、あるいは後置詞なし）により、法的構造や公的な主権形式が示されています。
+                        日本国外務省公認の公式国号表記です。国名末尾の語尾（例: 〜合衆国、〜王国、〜連邦共和国、〜首長国連邦、〜人民民主共和国など）により、公的な政治構造や主権形式が明瞭に分離されています。
                     </p>
                 </div>
 
-                <!-- Governance Detail -->
                 <div class="space-y-3">
                     <h4 class="text-sm font-bold text-navy-900 border-b border-slate-200 pb-1 flex items-center gap-1.5">
                         <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 012-2H7a2 2 0 012 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5m0 0h5m0 0v-5a2 2 0 012-2h2a2 2 0 012 2v5"/></svg>
@@ -1104,7 +1146,6 @@
             }
         }
 
-        // Compare Modal
         function openCompareModal() {
             document.getElementById('compare-modal').classList.remove('hidden');
             renderComparison();
@@ -1122,7 +1163,6 @@
             sel1.innerHTML = options;
             sel2.innerHTML = options;
 
-            // Default picks
             sel1.value = ALL_COUNTRIES_DATABASE.find(c => c.shortName === '日本')?.id || ALL_COUNTRIES_DATABASE[0].id;
             sel2.value = ALL_COUNTRIES_DATABASE.find(c => c.shortName === '米国')?.id || ALL_COUNTRIES_DATABASE[1].id;
         }
